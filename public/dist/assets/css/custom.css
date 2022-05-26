@@ -1,0 +1,313 @@
+.footer {
+    background-color: #ffffff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1050;
+}
+
+.content {
+    margin-bottom: 65px;
+}
+
+#kt_aside {
+    z-index: 9999;
+}
+
+.vs__dropdown-toggle {
+    border: 0 !important;
+}
+
+.vs__dropdown-menu {
+    border: 0 !important;
+    box-shadow: 0px 0px 50px 0px rgb(82 63 105 / 10%) !important;
+    border-radius: 0.475rem !important;
+    padding: 1rem 0 !important;
+}
+
+.vs__dropdown-option {
+    padding: 0.75rem 1.25rem !important;
+}
+
+.vs__dropdown-option--highlight {
+    background-color: #009EF7 !important;
+    color: #fff !important;
+    transition: color 0.2s ease, background-color 0.2s ease !important;
+}
+
+@media (min-width: 1400px) {
+    .container-xxl, .container-xl, .container-lg, .container-md, .container-sm, .container {
+        max-width: unset
+    }
+
+}
+
+
+/*
+* NProgress Start
+*/
+
+#nprogress {
+    pointer-events: none;
+}
+
+#nprogress .bar {
+    background: #90002a;
+    position: fixed;
+    z-index: 1031;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+}
+
+/* Fancy blur effect */
+#nprogress .peg {
+    display: block;
+    position: absolute;
+    right: 0px;
+    width: 100px;
+    height: 100%;
+    box-shadow: 0 0 10px #90002a, 0 0 5px #90002a;
+    opacity: 1.0;
+
+    -webkit-transform: rotate(3deg) translate(0px, -4px);
+    -ms-transform: rotate(3deg) translate(0px, -4px);
+    transform: rotate(3deg) translate(0px, -4px);
+}
+
+/* Remove these to get rid of the spinner */
+#nprogress .spinner {
+    display: block;
+    position: fixed;
+    z-index: 1031;
+    top: 15px;
+    right: 15px;
+}
+
+#nprogress .spinner-icon {
+    width: 24px;
+    height: 24px;
+    box-sizing: border-box;
+
+    border: solid 2px transparent;
+    border-top-color: #90002a;
+    border-left-color: #90002a;
+    border-radius: 50%;
+
+    -webkit-animation: nprogress-spinner 400ms linear infinite;
+    animation: nprogress-spinner 400ms linear infinite;
+}
+
+.nprogress-custom-parent {
+    overflow: hidden;
+    position: relative;
+}
+
+.nprogress-custom-parent #nprogress .spinner,
+.nprogress-custom-parent #nprogress .bar {
+    position: absolute;
+}
+
+@-webkit-keyframes nprogress-spinner {
+    0% {
+        -webkit-transform: rotate(0deg);
+    }
+
+    100% {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes nprogress-spinner {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.modal.big_modal {
+    z-index: 9999;
+    width: 95vw;
+    height: 95vh;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal-fullscreen {
+    width: 100%;
+}
+
+.modal_image img {
+    object-fit: contain;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 500px;
+    object-fit: contain;
+}
+
+.filepond--item {
+    width: calc(20% - .5rem) !important;
+}
+
+.data-image {
+    position: relative;
+    width: 100%;
+    height: 175px;
+    object-fit: cover;
+}
+
+.data-video{
+    position:relative
+}
+
+.data-video .play-icon{
+    position: absolute;
+    display: block;
+    background: url(http://www.slatecube.com/images/play-btn.png) center center no-repeat;
+    height: 100%;
+    top: 50%;
+    left: 50%;
+    background-size: contain;
+    transform: translate(-50%, -50%);
+}
+
+.copy-success {
+    color: #50CD89;
+}
+
+.swal2-container {
+    z-index: 99999 !important;
+}
+
+#file_upload_modal {
+    z-index: 99999;
+}
+
+.filepond--credits {
+    display: none;
+}
+.library_modal .list-item{
+    width: 10%;
+    padding: 0;
+}
+
+.library_modal .filepond--wrapper {
+    height: 135px;
+}
+
+
+.library_modal .filepond--panel-root {
+    background-color: transparent;
+}
+
+.library_modal .filepond--drop-label {
+    height: 0 !important;
+    min-height: 0 !important;
+}
+
+.library_modal .filepond--drop-label label {
+    display: none !important;
+}
+
+.library_modal .filepond--item {
+    width: 100% !important;
+}
+
+.library_modal .thumb-img {
+    height: 135px;
+    width: 100%;
+    object-fit: cover;
+    -webkit-user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+.library_modal .selected-wrapper{
+    overflow-y: scroll;
+}
+.library_modal .selected-wrapper img{
+    width: 100%;
+    height: 200px;
+    object-fit: contain;
+    border: 1px solid rgba(0,0,0,0.2);
+}
+/*
+* NProgress End
+*/
+
+img {
+    max-width: 100% !important;
+}
+
+/*
+* Nestable
+*/
+
+.he-tree .tree-node{
+    /*border: 1px solid #ccc;*/
+    /*margin-bottom: 5px;*/
+    /*padding: 0px;*/
+}
+.he-tree--hidden{
+    display: none;
+}
+.he-tree--rtl{
+    direction: rtl;
+}
+.he-tree .tree-placeholder{
+}
+
+.he-tree .tree-node  {
+    background: #eaeaea
+}
+.he-tree .d-flex:hover  {
+    background: #bdfcfc;
+}
+
+.he-tree .tree-node .btn-drag{
+    height: 30px!important;
+    width: 32px!important;
+}
+
+.he-tree .tree-placeholder-node{
+    background: #90002a;
+    border: 1px dashed #fcf1f1;
+    height: 30px;
+}
+.he-tree .dragging .tree-node-back:hover{
+    background-color: inherit;
+}
+
+
+.file-upload-label{
+    margin: 18px;
+    text-align: center;
+    background: #f1f0ef;
+    padding: 15px;
+    border-radius: 6px;
+}
+
+.play-icon {
+    content: 'A';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    background-color: #555;
+    color: white;
+    font-size: 16px;
+    padding: 12px 24px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
