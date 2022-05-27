@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
         // ]);
         $this->call(LangSeeder::class);
         $this->call(UserSeeder::class);
+        $this->call(AdminSeeder::class);
         $this->call(PopupSeeder::class);
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Controllers\AdminBranchGroup;
+use App\Http\Controllers\AdminBranchController;
+use App\Http\Controllers\AdminBranchGroupController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminUserController;
@@ -68,14 +69,21 @@ Route::middleware('admin')->group(function(){
     Route::post('/admin/user/save',[AdminUserController::class,'save'])->name('admin.user.save');
     Route::get('/admin/popup',[PopupController::class,'list'])->name('admin.popup.list');
     Route::get('/admin/logout', [AdminLoginController::class, 'destroy'])->name('admin.logout');
-    Route::get('admin/branch-group',[AdminBranchGroup::class,'list'])->name('admin.branchGroup');
-    Route::get('admin/branch-group/new',[AdminBranchGroup::class,'saveform'])->name('admin.branchGroup.saveform');
 
-    Route::post('admin/branch-group/new',[AdminBranchGroup::class,'save'])->name('admin.branchGroup.save');
+    Route::get('admin/branch-group',[AdminBranchGroupController::class,'list'])->name('admin.branchGroup');
+    Route::get('admin/branch-group/new/{id?}',[AdminBranchGroupController::class,'saveform'])->name('admin.branchGroup.saveform');
 
-    Route::get('admin/branch-group/edit/{id}',[AdminBranchGroup::class,'editform'])->name('admin.branchGroup.editform');
-    Route::post('admin/branch-group/update',[AdminBranchGroup::class,'update'])->name('admin.branchGroup.update');
-    Route::get('admin/branch-group/delete/{id}',[AdminBranchGroup::class,'delete'])->name('admin.branchGroup.delete');
+    Route::post('admin/branch-group/new',[AdminBranchGroupController::class,'save'])->name('admin.branchGroup.save');
+
+    Route::get('admin/branch-group/delete/{id}',[AdminBranchGroupController::class,'delete'])->name('admin.branchGroup.delete');
+
+
+
+    Route::get('admin/branch',[AdminBranchController::class,'list'])->name('admin.branch');
+    Route::get('admin/branch/new/{id?}',[AdminBranchController::class,'saveform'])->name('admin.branch.saveform');
+    Route::post('admin/branch/new',[AdminBranchController::class,'save'])->name('admin.branch.save');
+    Route::get('admin/branch/delete/{id}',[AdminBranchController::class,'delete'])->name('admin.branch.delete');
+
 
 });
 

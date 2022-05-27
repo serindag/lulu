@@ -1,34 +1,36 @@
 <x-back.master>
     <div class="mb-4 mt-5">
-        <h5>Grup Yönetimi</h5>
+        <h5>Şube Yönetimi</h5>
         <p>
-            Buradan grup ekleyebilir,silebilir ve grubu güncelleyebilirsiniz.
+            Buradan şube ekleyebilir,silebilir ve grubu güncelleyebilirsiniz.
         </p>
     </div>
 
     <table id="example" class="table table-striped example" style="width:100%">
         <thead>
             <tr>
-                <th width="85%">İsim</th>
+                <th width="50%">Şube Adı</th>
+                <th >Şehir</th>
+                <th width="20%">Telefon</th>
                 <th>İşlemler</th>
 
             </tr>
         </thead>
         <tbody>
-            @foreach ($branchGroups as $branchGroup)
+            @foreach ($branchs as $branch)
 
                     <tr>
-                        <td width="85%">{{ $branchGroup->name }}</td>
+                        <td width="50%">{{ $branch->name }}</td>
+                        <td >{{ $branch->city }}</td>
+                        <td >{{ $branch->telephone }}</td>
                         <td>
-
-                            <a href="{{ route('admin.branchGroup.saveform', $branchGroup->id) }}"
+                            <a href="{{ route('admin.branch.saveform', $branch->id) }}"
                                 class="btn btn-danger btn-sm" Title="Düzenle"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                             <a class="btn btn-primary btn-sm deletebutton" Title="Sil">
                                 <i class="fa-solid fa-trash-can "></i>
                             </a>
                         </td>
-
                     </tr>
 
             @endforeach
@@ -39,13 +41,10 @@
     </table>
 
 
-
-
-
     @push('newedit')
         <div class="d-flex align-items-center py-1">
             <!--begin::Button-->
-            <a href="{{ route('admin.branchGroup.saveform') }}" class="btn btn-sm btn-primary"><i
+            <a href="{{ route('admin.branch.saveform') }}" class="btn btn-sm btn-primary"><i
                     class="fa-solid fa-plus"></i> Yeni Ekle</a>
             <!--end::Button-->
         </div>
@@ -66,7 +65,7 @@
         </script>
         <script>
             $(".deletebutton").click(function() {
-                $.get("{{ isset($branchGroup) ? route('admin.branchGroup.delete', $branchGroup->id) : '' }}",
+                $.get("{{ isset($branch) ? route('admin.branch.delete', $branch->id) : '' }}",
                     function(data, status) {
 
                         const swalWithBootstrapButtons = Swal.mixin({
@@ -108,18 +107,11 @@
                             }
                         })
 
-
-
-
-
                     });
-
 
             })
         </script>
     @endpush
-
-
 
 
 </x-back.master>
