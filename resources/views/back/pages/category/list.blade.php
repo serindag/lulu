@@ -17,37 +17,37 @@
             <ol class="dd-list">
                 @foreach($categories as $category)
                    
-                  
-                        <li class="dd-item" data-id="{{$category->id}}">
+
+                        <li class="dd-item" data-id="{{$category->id}}" data-parent="{{$category->parent_id}}">
                             <div class="dd-handle">{{$category->name}}</div>
-                    
+
                             @foreach($category->childreen as $child)
                                  <ol class="dd-list">
-                                    <li class="dd-item" data-id="{{$child->id}}"><div class="dd-handle">{{$child->name}}</div>
+                                    <li class="dd-item" data-id="{{$child->id}}" data-parent="{{$child->parent_id}}"><div class="dd-handle">{{$child->name}}</div>
 
-                                  @foreach($child->childreen as $subchild) 
+                                  @foreach($child->childreen as $subchild)
                                     <ol class="dd-list">
-                                <li class="dd-item" data-id="{{$subchild->id}}"><div class="dd-handle">{{$subchild->name}}</div></li>
-                               
+                                <li class="dd-item" data-id="{{$subchild->id}}" data-parent="{{$subchild->parent_id}}"><div class="dd-handle">{{$subchild->name}}</div></li>
+
                                 </ol>
 
-                                  @endforeach  
-                                    
-                                    
-                                    
+                                  @endforeach
+
+
+
                                     </li>
-                        
-                        
-                       
+
+
+
                                 </ol>
 
                             @endforeach
                         </li>
-                   
-                   
+
+
                 @endforeach
 
-                
+
             </ol>
         </div>
 
@@ -150,6 +150,7 @@
                                 method:"POST",
                                 data:{
                                     data:list.nestable('serialize'),
+                                    parent:list.nestable('serialize'),
                                 },
                                 success:function(data)
                                 {

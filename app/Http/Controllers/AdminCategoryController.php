@@ -21,11 +21,9 @@ class AdminCategoryController extends Controller
     public function order(Request $request)
     {
       /* return response()->json($request->data,200);  */
-        foreach ($request->data as $key=> $data)
+        /* foreach ($request->data as $key=> $data)
         {
-            $save=Category::findOrFail($data->id);
-            $save->order = $key+1;
-            $save->save();
+
             foreach($data as $update)
             {
                 if(!is_array($update))
@@ -33,9 +31,6 @@ class AdminCategoryController extends Controller
                     $save=Category::findOrFail($update);
                     $save->order=$key+1;
                     $save->save();
-                }else {
-                    
-
                 }
 
 
@@ -43,7 +38,7 @@ class AdminCategoryController extends Controller
             }
 
 
-       }
-      return "İşlem Başarılı";
+       } */
+      return $request->data;
     }
 }
