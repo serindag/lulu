@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->integer('lang_id');
+            $table->integer('status');
+            $table->integer('order');
+            $table->integer('parent_id')->nullable();
             $table->integer('branch_id');
             $table->timestamps();
         });

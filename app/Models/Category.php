@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Category extends Model
 {
     use HasFactory;
+
+    public function scopeRoot($query)
+    {
+        $query->whereNull('parent_id');
+    }
+
+
+    public function childreen()
+    {
+        return $this->hasMany(Category::class,'parent_id');
+    }
+   
 }

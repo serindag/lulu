@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminBranchController;
 use App\Http\Controllers\AdminBranchGroupController;
+use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminUserController;
@@ -83,6 +84,9 @@ Route::middleware('admin')->group(function(){
     Route::get('admin/branch/new/{id?}',[AdminBranchController::class,'saveform'])->name('admin.branch.saveform');
     Route::post('admin/branch/new',[AdminBranchController::class,'save'])->name('admin.branch.save');
     Route::get('admin/branch/delete/{id}',[AdminBranchController::class,'delete'])->name('admin.branch.delete');
+
+    Route::get('admin/category',[AdminCategoryController::class,'list'])->name('admin.category.list');
+    Route::post('admin/ajax',[AdminCategoryController::class,'order'])->name('admin.category.order');
 
 
 });
