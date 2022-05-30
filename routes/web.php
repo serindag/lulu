@@ -86,9 +86,9 @@ Route::middleware('admin')->group(function(){
     Route::get('admin/branch/delete/{id}',[AdminBranchController::class,'delete'])->name('admin.branch.delete');
 
     Route::get('admin/category',[AdminCategoryController::class,'list'])->name('admin.category.list');
-    Route::post('admin/ajax',[AdminCategoryController::class,'order'])->name('admin.category.order');
-
-
+    Route::post('admin/category',[AdminCategoryController::class,'placement'])->name('admin.category.placement');
+    Route::get('admin/category/new/{id?}',[AdminCategoryController::class,'saveform'])->name('admin.category.saveform');
+    Route::post('admin/category/new',[AdminCategoryController::class,'save'])->name('admin.category.save');
 });
 
 /*End Admin Routes */
