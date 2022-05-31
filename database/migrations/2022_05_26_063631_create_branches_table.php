@@ -24,7 +24,7 @@ return new class extends Migration
             $table->time('service_start');
             $table->time('service_end');
             $table->integer('branch_group_id');
-
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

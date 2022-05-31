@@ -1,4 +1,26 @@
 <x-back.master>
+
+    @push('css')
+        <link rel="stylesheet" href="sweetalert2.min.css">
+        <style>
+            .status:hover
+               {
+                   cursor: pointer;
+               }
+
+               .button {
+                   border: 1px solid #2996cc;
+                   padding: 4px;
+                   border-radius: 5px;
+
+               }
+
+               .edit>i {
+                   color: #2996cc
+               }
+       </style>
+    @endpush
+
     <div class="mb-4 mt-5">
         <h5>Şube Yönetimi</h5>
         <p>
@@ -24,12 +46,27 @@
                         <td >{{ $branch->city }}</td>
                         <td >{{ $branch->telephone }}</td>
                         <td>
-                            <a href="{{ route('admin.branch.saveform', $branch->id) }}"
-                                class="btn btn-danger btn-sm" Title="Düzenle"><i
-                                    class="fa-solid fa-pen-to-square"></i></a>
-                            <a class="btn btn-primary btn-sm deletebutton" Title="Sil">
-                                <i class="fa-solid fa-trash-can "></i>
-                            </a>
+
+
+                            <span style="float:right;margin-left:5px">
+                                <a  class="button deletebutton"><i
+                                        class="fa-solid fa-trash-can "></i></a>
+                            </span>
+                            <span style="float:right;margin-left:5px">
+                                <a href="{{ route('admin.branch.saveform', $branch->id) }}" class="button"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+                            </span>
+
+                            <span  style="float:right;margin-left:5px">
+                                <a branch-id="{{ $branch->id }}" status-id="{{ $branch->status }}"  class="button status">
+                                    @if($branch->status>0)
+                                Aktif
+                             @else
+                                 Pasif
+                             @endif
+                                </a>
+                            </span>
+
                         </td>
                     </tr>
 
@@ -50,9 +87,7 @@
         </div>
     @endpush
 
-    @push('css')
-        <link rel="stylesheet" href="sweetalert2.min.css">
-    @endpush
+
 
     @push('js')
         <script src="sweetalert2.min.js"></script>
@@ -111,6 +146,33 @@
 
             })
         </script>
+
+    <script>
+        $(".status").click(function(){
+
+            id=$(this)[0].getAttribute('branch-id');
+            status_id=$(this).html();
+            if(status_id.trim()=="Pasif")
+                {
+
+                    $(this).html('Aktif');
+
+                }
+                if(status_id.trim()=="Aktif")
+                {
+
+                    $(this).html("Pasif");
+
+                };
+            $.get("{{ route('admin.branch.status') }}",{id:id},function(data,status){
+                
+
+                console.log(data);
+            });
+
+        });
+
+    </script>
     @endpush
 
 

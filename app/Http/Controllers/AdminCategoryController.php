@@ -69,7 +69,6 @@ class AdminCategoryController extends Controller
                     if ($lang->name == 'Türkçe') {
                         $categories = new Category();
                         $categories->name = $name;
-                        $categories->order = 1;
                         $categories->branch_id = $request->branch_id;
                         $categories->save();
                     }
@@ -103,5 +102,21 @@ class AdminCategoryController extends Controller
             }
         }
         return redirect()->route('admin.category.list');
+    }
+
+    public function status(Request $request)
+    {
+        $id= $request->id;
+        $status=Category::findOrFail($id);
+        if($status->status==1)
+        {
+            $status->status=0;
+
+        }else
+        {
+            $status->status=1;
+        }
+        $status->save();
+        return "işlem başarılı";
     }
 }

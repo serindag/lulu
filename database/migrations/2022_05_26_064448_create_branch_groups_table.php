@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('branch_groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

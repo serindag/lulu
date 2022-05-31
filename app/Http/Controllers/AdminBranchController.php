@@ -18,7 +18,7 @@ class AdminBranchController extends Controller
         $branchs=null;
         $branchGroups=BranchGroup::all();
         if ($id != null) {
-            $branchs = Branch::where('id', $id)->first();    
+            $branchs = Branch::where('id', $id)->first();
 
         }
 
@@ -54,5 +54,21 @@ class AdminBranchController extends Controller
         $deletebranch = Branch::findOrFail($id);
         $deletebranch->delete();
         return "Silme işlemi başarı ile gerçekleşti";
+    }
+
+    public function status(Request $request)
+    {
+        $id= $request->id;
+        $status=Branch::findOrFail($id);
+        if($status->status==1)
+        {
+            $status->status=0;
+
+        }else
+        {
+            $status->status=1;
+        }
+        $status->save();
+        return "işlem başarılı";
     }
 }

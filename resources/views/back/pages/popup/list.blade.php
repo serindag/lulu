@@ -1,5 +1,25 @@
 <x-back.master>
 
+    @push('css')
+    <style>
+        .status:hover
+           {
+               cursor: pointer;
+           }
+
+           .button {
+               border: 1px solid #2996cc;
+               padding: 4px;
+               border-radius: 5px;
+
+           }
+
+           .edit>i {
+               color: #2996cc
+           }
+   </style>
+
+    @endpush
 
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 
@@ -93,10 +113,20 @@
                                             </td>
 
                                             <td class="text-end" width="15%">
-                                                <a class="btn btn-primary btn-sm" Title="Sil">
-                                                    <i class="fa-solid fa-trash-can "></i>
-                                                </a>
-                                                <a class="btn btn-danger btn-sm" Title="Düzenle"><i class="fa-solid fa-pen-to-square"></i></a>
+                                                <span style="float:right;margin-left:5px">
+                                                    <a href="" class="button"><i
+                                                            class="fa-solid fa-trash-can "></i></a>
+                                                </span>
+                                                <span style="float:right;margin-left:5px">
+                                                    <a href="" class="button"><i
+                                                            class="fa-solid fa-pen-to-square"></i></a>
+                                                </span>
+
+                                                <span  style="float:right;margin-left:5px">
+                                                    <a category-id="" class="button status">
+                                                        Aktif
+                                                    </a>
+                                                </span>
                                             </td>
                                         </tr>
 

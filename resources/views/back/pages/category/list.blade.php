@@ -3,9 +3,15 @@
     @push('css')
         <link rel="stylesheet" href="{{ asset('dist/assets/css/nestable.css') }}">
 
-
+   
 
         <style type="text/css">
+
+            .status:hover
+            {
+                cursor: pointer;
+            }
+
             .button {
                 border: 1px solid #2996cc;
                 padding: 4px;
@@ -352,8 +358,8 @@
 
 
     <menu id="nestable-menu">
-        <button type="button" data-action="expand-all">Tümünü Genişlet</button>
-        <button type="button" data-action="collapse-all">Tümünü Daralt</button>
+        <button type="button" class="btn btn-success btn-sm" data-action="expand-all">Tümünü Genişlet</button>
+        <button type="button" class="btn btn-danger btn-sm" data-action="collapse-all">Tümünü Daralt</button>
     </menu>
 
     <div class="cf nestable-lists">
@@ -365,19 +371,30 @@
                         <div class="dd-handle dd3-handle"></div>
                         <div class="dd3-content">{{ $category->name }}
 
+
+
                             <span style="float:right;margin-left:5px">
-                                <a class="button active">Aktif</a>
-                            </span>
-                            <span style="float:right;display:none;margin-left:5px">
-                                <a class="button passive">Pasif</a>
+                                <a href="" class="button"><i class="fa-solid fa-trash-can "></i></a>
                             </span>
 
                             <span style="float:right;margin-left:5px">
-                                <a href="" class="button"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ route('admin.category.saveform', $category->id) }}" class="button"><i class="fa-solid fa-pen-to-square"></i></a>
                             </span>
                             <span style="float:right;margin-left:5px">
                                 <a href="" class="button"><i class="fa-solid fa-martini-glass"></i></a>
                             </span>
+
+                            <span  style="float:right;margin-left:5px">
+                                <a  category-id="{{ $category->id }}" class="button status">
+                            @if($category->status>0)
+                               Aktif
+                            @else
+                                Pasif
+                            @endif
+                            </a>
+                        </span>
+
+
 
 
                         </div>
@@ -390,20 +407,31 @@
                                         <div class="dd3-content">{{ $child->name }}
 
                                             <span style="float:right;margin-left:5px">
-                                                <a class="button active">Aktif</a>
-                                            </span>
-                                            <span style="float:right;display:none;margin-left:5px">
-                                                <a class="button passive">Pasif</a>
+                                                <a href="" class="button"><i
+                                                        class="fa-solid fa-trash-can "></i></a>
                                             </span>
 
                                             <span style="float:right;margin-left:5px">
-                                                <a href="" class="button"><i
+                                                <a href="{{ route('admin.category.saveform', $child->id) }}" class="button"><i
                                                         class="fa-solid fa-pen-to-square"></i></a>
                                             </span>
                                             <span style="float:right;margin-left:5px">
                                                 <a href="" class="button"><i
                                                         class="fa-solid fa-martini-glass"></i></a>
                                             </span>
+
+
+                                            <span   style="float:right;margin-left:5px">
+                                                <a category-id="{{ $child->id }}" class="button status">
+                                                    @if($child->status>0)
+                                                    Aktif
+                                                 @else
+                                                     Pasif
+                                                 @endif
+
+                                                </a>
+                                            </span>
+
 
 
 
@@ -420,21 +448,30 @@
                                         <li class="dd-item dd3-item" data-id="{{ $subchild->id }}">
                                             <div class="dd-handle dd3-handle"></div>
                                             <div class="dd3-content">{{ $subchild->name }}
-                                                <span style="float:right;margin-left:5px">
-                                                    <a class="button active">Aktif</a>
-                                                </span>
-                                                <span style="float:right;display:none;margin-left:5px">
-                                                    <a class="button passive">Pasif</a>
-                                                </span>
+
 
                                                 <span style="float:right;margin-left:5px">
                                                     <a href="" class="button"><i
+                                                            class="fa-solid fa-trash-can "></i></a>
+                                                </span>
+                                                <span style="float:right;margin-left:5px">
+                                                    <a href="{{ route('admin.category.saveform', $subchild->id) }}" class="button"><i
                                                             class="fa-solid fa-pen-to-square"></i></a>
                                                 </span>
                                                 <span style="float:right;margin-left:5px">
                                                     <a href="" class="button"><i
                                                             class="fa-solid fa-martini-glass"></i></a>
                                                 </span>
+                                                <span  style="float:right;margin-left:5px">
+                                                    <a category-id="{{ $subchild->id }}" class="button status">
+                                                        @if($child->status>0)
+                                                    Aktif
+                                                 @else
+                                                     Pasif
+                                                 @endif
+                                                    </a>
+                                                </span>
+
 
 
                                             </div>
@@ -525,6 +562,33 @@
             });
         </script>
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+        <script>
+            $(".status").click(function(){
+                id=$(this)[0].getAttribute('category-id');
+                status_id=$(this).html();
+                if(status_id.trim()=="Pasif")
+                {
+
+                    $(this).html('Aktif');
+
+                }
+                if(status_id.trim()=="Aktif")
+                {
+
+                    $(this).html("Pasif");
+
+                };
+                $.get("{{ route('admin.category.status') }}",{id:id},function(data,status){
+
+                    console.log(data);
+                });
+
+            });
+
+
+        </script>
+
     @endpush
 
     @push('newedit')

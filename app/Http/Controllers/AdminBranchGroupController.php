@@ -85,4 +85,20 @@ class AdminBranchGroupController extends Controller
 
         return "Silme işlemi başarı ile gerçekleşti";
     }
+
+    public function status(Request $request)
+    {
+        $id= $request->id;
+        $status=BranchGroup::findOrFail($id);
+        if($status->status==1)
+        {
+            $status->status=0;
+
+        }else
+        {
+            $status->status=1;
+        }
+        $status->save();
+        return "işlem başarılı";
+    }
 }

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('image')->nullable();
-            $table->integer('status')->default(1);
-            $table->integer('order');
+            $table->integer('status')->default(0);
+            $table->integer('order')->default(0);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('branch_id');
             $table->timestamps();

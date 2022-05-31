@@ -77,6 +77,7 @@ Route::middleware('admin')->group(function(){
     Route::post('admin/branch-group/new',[AdminBranchGroupController::class,'save'])->name('admin.branchGroup.save');
 
     Route::get('admin/branch-group/delete/{id}',[AdminBranchGroupController::class,'delete'])->name('admin.branchGroup.delete');
+    Route::get('admin/branch-group/status',[AdminBranchGroupController::class,'status'])->name('admin.branchGroup.status');
 
 
 
@@ -84,11 +85,15 @@ Route::middleware('admin')->group(function(){
     Route::get('admin/branch/new/{id?}',[AdminBranchController::class,'saveform'])->name('admin.branch.saveform');
     Route::post('admin/branch/new',[AdminBranchController::class,'save'])->name('admin.branch.save');
     Route::get('admin/branch/delete/{id}',[AdminBranchController::class,'delete'])->name('admin.branch.delete');
+    Route::get('admin//branch/status',[AdminBranchController::class,'status'])->name('admin.branch.status');
+
 
     Route::get('admin/category',[AdminCategoryController::class,'list'])->name('admin.category.list');
     Route::post('admin/category',[AdminCategoryController::class,'placement'])->name('admin.category.placement');
     Route::get('admin/category/new/{id?}',[AdminCategoryController::class,'saveform'])->name('admin.category.saveform');
     Route::post('admin/category/new',[AdminCategoryController::class,'save'])->name('admin.category.save');
+    Route::get('admin/category/status',[AdminCategoryController::class,'status'])->name('admin.category.status');
+
 });
 
 /*End Admin Routes */
