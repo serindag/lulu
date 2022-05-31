@@ -5,11 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Popup extends Model
+class Product extends Model
 {
     use HasFactory;
-    protected $quarded=[];
-
+    
     public function branch()
     {
         return $this->hasOne(Branch::class,'id','branch_id');
@@ -19,4 +18,3 @@ class Popup extends Model
         return $this->hasOne(Category::class,'id','category_id');
     }
 }
-

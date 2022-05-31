@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\AdminBranchController;
 use App\Http\Controllers\AdminBranchGroupController;
+use App\Http\Controllers\AdminBranchUserController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminPopupController;
+use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
@@ -68,7 +71,7 @@ Route::middleware('admin')->group(function(){
     Route::get('/admin',[AdminDashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/user',[AdminUserController::class,'form'])->name('admin.user.form');
     Route::post('/admin/user/save',[AdminUserController::class,'save'])->name('admin.user.save');
-    Route::get('/admin/popup',[PopupController::class,'list'])->name('admin.popup.list');
+    
     Route::get('/admin/logout', [AdminLoginController::class, 'destroy'])->name('admin.logout');
 
     Route::get('admin/branch-group',[AdminBranchGroupController::class,'list'])->name('admin.branchGroup');
@@ -93,6 +96,24 @@ Route::middleware('admin')->group(function(){
     Route::get('admin/category/new/{id?}',[AdminCategoryController::class,'saveform'])->name('admin.category.saveform');
     Route::post('admin/category/new',[AdminCategoryController::class,'save'])->name('admin.category.save');
     Route::get('admin/category/status',[AdminCategoryController::class,'status'])->name('admin.category.status');
+
+    Route::get('admin/branchUser',[AdminBranchUserController::class,'list'])->name('admin.branchUser.list');
+    Route::get('admin/branchUser/status',[AdminBranchUserController::class,'status'])->name('admin.branchUser.status');
+    Route::get('admin/branchUser/new/{id?}',[AdminBranchUserController::class,'saveform'])->name('admin.branchUser.saveform');
+    Route::post('admin/branchUser/new',[AdminBranchUserController::class,'save'])->name('admin.branchUser.save');
+    Route::get('admin/branchUser/delete/{id}',[AdminBranchUserController::class,'delete'])->name('admin.branchUser.delete');
+
+    Route::get('/admin/popup',[AdminPopupController::class,'list'])->name('admin.popup.list');
+    Route::get('admin/popup/status',[AdminPopupController::class,'status'])->name('admin.popup.status');
+    Route::get('admin/popup/new/{id?}',[AdminPopupController::class,'saveform'])->name('admin.popup.saveform');
+    Route::post('admin/popup/new',[AdminPopupController::class,'save'])->name('admin.popup.save');
+    Route::get('admin/popup/delete/{id}',[AdminPopupController::class,'delete'])->name('admin.popup.delete');
+
+    Route::get('/admin/product/{id?}',[AdminProductController::class,'list'])->name('admin.product.list');
+    Route::get('admin/product/status',[AdminProductController::class,'status'])->name('admin.product.status');
+    Route::get('admin/product/new/{id?}',[AdminProductController::class,'saveform'])->name('admin.product.saveform');
+    Route::post('admin/product/new',[AdminProductController::class,'save'])->name('admin.product.save');
+    Route::get('admin/product/delete/{id}',[AdminProductController::class,'delete'])->name('admin.product.delete');
 
 });
 

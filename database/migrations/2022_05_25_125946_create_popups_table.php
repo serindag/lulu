@@ -16,7 +16,11 @@ return new class extends Migration
         Schema::create('popups', function (Blueprint $table) {
             $table->id();
             $table->longText('description');
-            $table->integer('lang_id');
+            $table->integer('status')->default(0);
+            $table->integer('branch_id');
+            $table->integer('category_id');
+            $table->dateTime('date_start');
+            $table->dateTime('date_end');
             $table->timestamps();
         });
     }

@@ -11,7 +11,7 @@
         @endforeach
     </ul>
 
-    <form action="{{ route('admin.category.save') }}" method="POST">
+    <form action="{{ route('admin.category.save') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
 
@@ -30,7 +30,7 @@
 
                     @if ($categoryLangs == null)
                         <div class="mb-4">
-                            <label class="form-label">Category Adı:</label>
+                            <label class="form-label">Kategori Adı:</label>
                             <input type="text" name="names[{{ $lang->id }}]" value="{{ old('name') }}"
                                 class="form-control" placeholder="Grup Adı">
 
@@ -39,16 +39,16 @@
                         @foreach ($categoryLangs as $categoryLang)
                             @if ($categoryLang->lang_id == $lang->id)
                                 <div class="mb-4">
-                                    <label class="form-label">Grup Adı:</label>
+                                    <label class="form-label">Kategori Adı:</label>
                                     <input type="text" name="names[{{ $lang->id }}]"
                                         value="{{ $categoryLang->translate }}" class="form-control"
-                                        placeholder="Category Adı">
+                                        placeholder="Kategori Adı">
                                     <input type="hidden" name="id[]" value="{{ $categoryLang->id }}">
                                 </div>
                             @else
                                 @if (count($langs) != count($categoryLangs))
                                     <div class="mb-4">
-                                        <label class="form-label">Grup Adı:</label>
+                                        <label class="form-label">Kategori Adı:</label>
                                         <input type="text" name="names[{{ $lang->id }}]"
                                             value="{{ old('name') }}" class="form-control" placeholder="Grup Adı">
                                         <input type="hidden" name="id[]" value="{{ $categoryLang->id }}">
@@ -62,7 +62,7 @@
             @endforeach
 
         </div>
-        <div class="row mb-2">
+        <div class="row ">
             <label for="">Şube Adı</label>
 
             <select name="branch_id" class="form-control" id="">
@@ -78,6 +78,12 @@
 
 
             </select>
+        </div>
+        
+        <div class="row mb-2">
+            <label for="">Kategori Resmi</label>
+            <img style="width: 200px" src="@isset($category->image) {{asset($category->image)}} @endisset" alt="" class="img-thumbnail rounded img-fluid" width="300">
+            <input type="file" name="image">
         </div>
 
         <div class="row">

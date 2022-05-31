@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('top_categories', function (Blueprint $table) {
+        Schema::create('product_langs', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('image');
-            $table->text('description');
+            $table->integer('product_id');
+            $table->integer('lang_id');
+            $table->string('translate');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('top_categories');
+        Schema::dropIfExists('product_langs');
     }
 };

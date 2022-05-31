@@ -104,7 +104,7 @@
                             </a>
                         </div>
                         <div class="menu-item">
-                            <a class="menu-link" href="{{route('admin.branch')}}">
+                            <a class="menu-link" href="{{route('admin.branchUser.list')}}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>

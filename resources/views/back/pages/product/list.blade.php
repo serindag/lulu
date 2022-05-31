@@ -30,7 +30,8 @@
     <table id="example" class="table table-striped example" style="width:100%">
         <thead>
             <tr>
-                <th width="60%">İsim</th>
+                <th >İsim</th>
+                <th>Açıklama</th>
                 <th>Şube</th>
                 <th>Kategori</th>
                 <th>Durum</th>
@@ -39,16 +40,17 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($popups as $popup)
+            @foreach ($products as $product)
 
                     <tr>
-                        <td > {!!Str::limit($popup->description,50,'...')!!} </td>
-                        <td >@isset($popup->branch->name) {{$popup->branch->name}} @endisset</td>
-                        <td >@isset($popup->category->name) {{$popup->category->name}} @endisset</td>
+                        <td > {{$product->name}} </td>
+                        <td > {!!Str::limit($product->description,50,'...')!!} </td>
+                        <td >@isset($product->branch->name) {{$product->branch->name}} @endisset</td>
+                        <td >@isset($product->category->name) {{$product->category->name}} @endisset</td>
                         <td>
                             <span >
-                                <a popup-id="{{ $popup->id }}" class="button status">
-                                    @if($popup->status>0)
+                                <a product-id="{{ $product->id }}" class="button status">
+                                    @if($product->status>0)
                                 Aktif
                              @else
                                  Pasif
@@ -58,7 +60,7 @@
                     </td>
                         <td>
                             <span >
-                                <a href="{{ route('admin.popup.saveform', $popup->id) }}" class="button"><i
+                                <a href="{{ route('admin.product.saveform', $product->id) }}" class="button"><i
                                         class="fa-solid fa-pen-to-square"></i></a>
                             </span>
                             <span >
@@ -85,7 +87,7 @@
     @push('newedit')
         <div class="d-flex align-items-center py-1">
             <!--begin::Button-->
-            <a href="{{route('admin.popup.saveform')}}" class="btn btn-sm btn-primary"><i
+            <a href="{{route('admin.product.saveform')}}" class="btn btn-sm btn-primary"><i
                     class="fa-solid fa-plus"></i> Yeni Ekle</a>
             <!--end::Button-->
         </div>
@@ -104,7 +106,7 @@
         </script>
         <script>
             $(".deletebutton").click(function() {
-                $.get("{{ isset($popup) ? route('admin.popup.delete', $popup->id) : '' }}",
+                $.get("{{ isset($product) ? route('admin.product.delete', $product->id) : '' }}",
                     function(data, status) {
 
                         const swalWithBootstrapButtons = Swal.mixin({
@@ -130,9 +132,7 @@
                                     'Veri sildindi',
                                     'success'
                                 );
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 2000);
+                                
 
                             } else if (
                                 /* Read more about handling dismissals below */
@@ -157,7 +157,7 @@
         </script>
         <script>
             $(".status").click(function(){
-                id=$(this)[0].getAttribute('popup-id');
+                id=$(this)[0].getAttribute('product-id');
                 status_id=$(this).html();
                 if(status_id.trim()=="Pasif")
                 {
@@ -171,7 +171,7 @@
                     $(this).html("Pasif");
 
                 };
-                $.get("{{ route('admin.popup.status') }}",{id:id},function(data,status){
+                $.get("{{ route('admin.product.status') }}",{id:id},function(data,status){
 
                     console.log(data);
                 });

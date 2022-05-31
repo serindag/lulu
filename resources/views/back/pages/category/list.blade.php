@@ -381,7 +381,7 @@
                                 <a href="{{ route('admin.category.saveform', $category->id) }}" class="button"><i class="fa-solid fa-pen-to-square"></i></a>
                             </span>
                             <span style="float:right;margin-left:5px">
-                                <a href="" class="button"><i class="fa-solid fa-martini-glass"></i></a>
+                                <a href="{{ route('admin.product.list', $category->id) }}" class="button"><i class="fa-solid fa-martini-glass"></i></a>
                             </span>
 
                             <span  style="float:right;margin-left:5px">
@@ -416,7 +416,7 @@
                                                         class="fa-solid fa-pen-to-square"></i></a>
                                             </span>
                                             <span style="float:right;margin-left:5px">
-                                                <a href="" class="button"><i
+                                                <a href="{{ route('admin.product.list', $child->id) }}" class="button"><i
                                                         class="fa-solid fa-martini-glass"></i></a>
                                             </span>
 
@@ -459,7 +459,7 @@
                                                             class="fa-solid fa-pen-to-square"></i></a>
                                                 </span>
                                                 <span style="float:right;margin-left:5px">
-                                                    <a href="" class="button"><i
+                                                    <a href="{{ route('admin.product.list', $subchild->id) }}" class="button"><i
                                                             class="fa-solid fa-martini-glass"></i></a>
                                                 </span>
                                                 <span  style="float:right;margin-left:5px">

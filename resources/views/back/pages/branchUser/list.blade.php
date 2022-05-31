@@ -1,74 +1,79 @@
 <x-back.master>
+
     @push('css')
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <style>
-         .status:hover
-            {
-                cursor: pointer;
-            }
+        <link rel="stylesheet" href="sweetalert2.min.css">
+        <style>
+            .status:hover
+               {
+                   cursor: pointer;
+               }
 
-            .button {
-                border: 1px solid #2996cc;
-                padding: 4px;
-                border-radius: 5px;
+               .button {
+                   border: 1px solid #2996cc;
+                   padding: 4px;
+                   border-radius: 5px;
 
-            }
+               }
 
-            .edit>i {
-                color: #2996cc
-            }
-    </style>
-
+               .edit>i {
+                   color: #2996cc
+               }
+       </style>
     @endpush
+
     <div class="mb-4 mt-5">
-        <h5>Grup Yönetimi</h5>
+        <h5>Şube Kullancı Yönetimi</h5>
         <p>
-            Buradan grup ekleyebilir,silebilir ve grubu güncelleyebilirsiniz.
+            Buradan şube kullanıcıları ekleyebilir,silebilir ve grubu güncelleyebilirsiniz.
         </p>
     </div>
 
     <table id="example" class="table table-striped example" style="width:100%">
         <thead>
             <tr>
-                <th width="60%">İsim</th>
-                <th>Şube</th>
-                <th>Kategori</th>
+                <th >Kullancı Adı</th>
+                <th >E-mail</th>
+                <th >Şube</th>
+                <th>Şehir</th>
                 <th>Durum</th>
                 <th>İşlemler</th>
 
             </tr>
         </thead>
         <tbody>
-            @foreach ($popups as $popup)
-
+            @foreach ($users as $user)
+                   
                     <tr>
-                        <td > {!!Str::limit($popup->description,50,'...')!!} </td>
-                        <td >@isset($popup->branch->name) {{$popup->branch->name}} @endisset</td>
-                        <td >@isset($popup->category->name) {{$popup->category->name}} @endisset</td>
+                        <td >{{ $user->name }}</td>
+                        <td >{{ $user->email }}</td>
+                        <td >{{ $user->branch->name }}</td>
+                        <td >{{ $user->branch->city }}</td>
                         <td>
                             <span >
-                                <a popup-id="{{ $popup->id }}" class="button status">
-                                    @if($popup->status>0)
+                                <a user-id="{{ $user->id }}" class="button status">
+                                    @if($user->status>0)
                                 Aktif
                              @else
                                  Pasif
                              @endif
                                 </a>
                             </span>
-                    </td>
+
+                        </td>
                         <td>
-                            <span >
-                                <a href="{{ route('admin.popup.saveform', $popup->id) }}" class="button"><i
+                            
+
+                            <span class="me-1">
+                                <a href="{{ route('admin.branchUser.saveform', $user->id) }}" class="button"><i
                                         class="fa-solid fa-pen-to-square"></i></a>
                             </span>
-                            <span >
+
+                            <span class="me-1">
                                 <a  class="button deletebutton"><i
                                         class="fa-solid fa-trash-can "></i></a>
                             </span>
-                            
 
                         </td>
-
                     </tr>
 
             @endforeach
@@ -79,13 +84,10 @@
     </table>
 
 
-
-
-
     @push('newedit')
         <div class="d-flex align-items-center py-1">
             <!--begin::Button-->
-            <a href="{{route('admin.popup.saveform')}}" class="btn btn-sm btn-primary"><i
+            <a href="{{ route('admin.branchUser.saveform') }}" class="btn btn-sm btn-primary"><i
                     class="fa-solid fa-plus"></i> Yeni Ekle</a>
             <!--end::Button-->
         </div>
@@ -104,7 +106,7 @@
         </script>
         <script>
             $(".deletebutton").click(function() {
-                $.get("{{ isset($popup) ? route('admin.popup.delete', $popup->id) : '' }}",
+                $.get("{{ isset($user) ? route('admin.branchUser.delete', $user->id) : '' }}",
                     function(data, status) {
 
                         const swalWithBootstrapButtons = Swal.mixin({
@@ -146,20 +148,17 @@
                             }
                         })
 
-
-
-
-
                     });
-
 
             })
         </script>
-        <script>
-            $(".status").click(function(){
-                id=$(this)[0].getAttribute('popup-id');
-                status_id=$(this).html();
-                if(status_id.trim()=="Pasif")
+
+    <script>
+        $(".status").click(function(){
+
+            id=$(this)[0].getAttribute('user-id');
+            status_id=$(this).html();
+            if(status_id.trim()=="Pasif")
                 {
 
                     $(this).html('Aktif');
@@ -171,18 +170,16 @@
                     $(this).html("Pasif");
 
                 };
-                $.get("{{ route('admin.popup.status') }}",{id:id},function(data,status){
+            $.get("{{ route('admin.branchUser.status') }}",{id:id},function(data,status){
+                
 
-                    console.log(data);
-                });
-
+                console.log(data);
             });
 
+        });
 
-        </script>
+    </script>
     @endpush
-
-
 
 
 </x-back.master>

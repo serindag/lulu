@@ -2,11 +2,10 @@
 
 namespace Database\Seeders;
 
-use App\Models\Popup;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class PopupSeeder extends Seeder
+class ProductSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,6 +14,6 @@ class PopupSeeder extends Seeder
      */
     public function run()
     {
-       
+        //
     }
 }

@@ -7,6 +7,8 @@ use App\Models\CategoryLang;
 use App\Models\SubCategory;
 use App\Models\Branch;
 use App\Models\Lang;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class AdminCategoryController extends Controller
@@ -50,26 +52,37 @@ class AdminCategoryController extends Controller
     public function saveform($id = null)
     {
         $categoryLangs = null;
+        $category=null;
         $langs = Lang::get();
         $langFirst = Lang::orderBy('order', 'asc')->first();
         $branchs = Branch::get();
 
         if ($id != null) {
+            $category=Category::where('id',$id)->first();
             $categoryLangs = CategoryLang::where('category_id', $id)->get();
         }
-        return view('back.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs'));
+        return view('back.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs','category'));
     }
 
     public function save(Request $request)
     {
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
+
                 if (!is_null($name)) {
                     $lang = Lang::where('id', $key)->first();
                     if ($lang->name == 'Türkçe') {
                         $categories = new Category();
                         $categories->name = $name;
                         $categories->branch_id = $request->branch_id;
+                        if($request->hasFile('image')){
+                            $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
+                            $request->image->move(public_path('dist/assets/media/category'),$imageName);
+                            $categories->image='dist/assets/media/category/'.$imageName;
+                
+                        }    
+
+
                         $categories->save();
                     }
                     $lastGroup = Category::orderBy('id', 'DESC')->first();
@@ -98,6 +111,12 @@ class AdminCategoryController extends Controller
                 $categories = Category::findOrFail($request->category_id);
                 $categories->name = $request->names[$lang->id];
                 $categories->branch_id = $request->branch_id;
+                if($request->hasFile('image')){
+                    $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
+                    $request->image->move(public_path('dist/assets/media/category'),$imageName);
+                    $categories->image='dist/assets/media/category/'.$imageName;
+        
+                }
                 $categories->save();
             }
         }

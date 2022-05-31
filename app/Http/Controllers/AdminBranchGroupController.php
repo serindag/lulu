@@ -29,6 +29,7 @@ class AdminBranchGroupController extends Controller
 
     public function save(Request $request)
     {
+       
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
                 if (!is_null($name)) {
@@ -48,7 +49,7 @@ class AdminBranchGroupController extends Controller
             }
         } else {
 
-
+            
 
             $i = 0;
             foreach ($request->names as $name) {
