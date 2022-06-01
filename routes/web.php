@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminBranchGroupController;
 use App\Http\Controllers\AdminBranchUserController;
 use App\Http\Controllers\AdminCategoryController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\AdminFeedbackController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminPopupController;
 use App\Http\Controllers\AdminProductController;
@@ -13,6 +14,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PopupController;
 use App\Http\Controllers\UserController;
+use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
 use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
@@ -71,7 +73,7 @@ Route::middleware('admin')->group(function(){
     Route::get('/admin',[AdminDashboardController::class,'index'])->name('admin.dashboard');
     Route::get('/admin/user',[AdminUserController::class,'form'])->name('admin.user.form');
     Route::post('/admin/user/save',[AdminUserController::class,'save'])->name('admin.user.save');
-    
+
     Route::get('/admin/logout', [AdminLoginController::class, 'destroy'])->name('admin.logout');
 
     Route::get('admin/branch-group',[AdminBranchGroupController::class,'list'])->name('admin.branchGroup');
@@ -109,11 +111,20 @@ Route::middleware('admin')->group(function(){
     Route::post('admin/popup/new',[AdminPopupController::class,'save'])->name('admin.popup.save');
     Route::get('admin/popup/delete/{id}',[AdminPopupController::class,'delete'])->name('admin.popup.delete');
 
-    Route::get('/admin/product/{id?}',[AdminProductController::class,'list'])->name('admin.product.list');
+
     Route::get('admin/product/status',[AdminProductController::class,'status'])->name('admin.product.status');
     Route::get('admin/product/new/{id?}',[AdminProductController::class,'saveform'])->name('admin.product.saveform');
+
     Route::post('admin/product/new',[AdminProductController::class,'save'])->name('admin.product.save');
     Route::get('admin/product/delete/{id}',[AdminProductController::class,'delete'])->name('admin.product.delete');
+
+    Route::get('admin/product/{id?}',[AdminProductController::class,'list'])->name('admin.product.list');
+
+
+    Route::get('admin/feedback',[AdminFeedbackController::class,'list'])->name('admin.feedback.list');
+    Route::get('admin/feedback/{id?}',[AdminFeedbackController::class,'saveform'])->name('admin.feedback.saveform');
+    Route::post('admin/feedback/new',[AdminFeedbackController::class,'save'])->name('admin.feedback.save');
+
 
 });
 

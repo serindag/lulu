@@ -83,12 +83,13 @@ class AdminPopupController extends Controller
             foreach ($request->names as $name) {
               
                 if (!is_null($name)) {
-                    
+                   
                     $popupLang = PopupLang::findOrFail($request->id[$i++]);
                     $popupLang->translate = $name;
                     $popupLang->save();
                 }
             }
+            
             
           
                 $lang = Lang::where('name', 'Türkçe')->first();

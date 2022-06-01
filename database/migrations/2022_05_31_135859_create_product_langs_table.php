@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->integer('product_id');
             $table->integer('lang_id');
-            $table->string('translate');
+            $table->string('translate_name');
+            $table->longText('translate_description');
             $table->timestamps();
         });
     }

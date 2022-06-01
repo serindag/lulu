@@ -116,7 +116,7 @@
                 </div>
 
                 <div class="menu-item">
-                    <a class="menu-link" href="#">
+                    <a class="menu-link" href="{{ route('admin.feedback.list') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
                             <i class="fa-solid fa-comment-dots"></i>

@@ -82,7 +82,7 @@
         
         <div class="row mb-2">
             <label for="">Kategori Resmi</label>
-            <img style="width: 200px" src="@isset($category->image) {{asset($category->image)}} @endisset" alt="" class="img-thumbnail rounded img-fluid" width="300">
+            <img style="width: 200px" src="@isset($category->image) {{asset($category->image)}} @endisset" alt="" class="img-thumbnail rounded img-fluid" >
             <input type="file" name="image">
         </div>
 

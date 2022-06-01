@@ -13,11 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('popup_langs', function (Blueprint $table) {
+        Schema::create('feedback', function (Blueprint $table) {
             $table->id();
-            $table->integer('popup_id');
-            $table->integer('lang_id');
-            $table->longText('translate');
+            $table->integer('branch_id');
+            $table->string('name');
+            $table->string('email');
+            $table->string('telephone');
+            $table->text('message');
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('popup_langs');
+        Schema::dropIfExists('feedback');
     }
 };

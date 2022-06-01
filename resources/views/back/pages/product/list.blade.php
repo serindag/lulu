@@ -6,14 +6,11 @@
             {
                 cursor: pointer;
             }
-
             .button {
                 border: 1px solid #2996cc;
                 padding: 4px;
                 border-radius: 5px;
-
             }
-
             .edit>i {
                 color: #2996cc
             }
@@ -67,7 +64,7 @@
                                 <a  class="button deletebutton"><i
                                         class="fa-solid fa-trash-can "></i></a>
                             </span>
-                            
+
 
                         </td>
 
@@ -108,7 +105,6 @@
             $(".deletebutton").click(function() {
                 $.get("{{ isset($product) ? route('admin.product.delete', $product->id) : '' }}",
                     function(data, status) {
-
                         const swalWithBootstrapButtons = Swal.mixin({
                             customClass: {
                                 confirmButton: 'btn btn-success',
@@ -116,7 +112,6 @@
                             },
                             buttonsStyling: false
                         })
-
                         swalWithBootstrapButtons.fire({
                             title: 'Silinsin mi',
                             text: "Veri Kalıcı olarak silinecektir.",
@@ -132,7 +127,7 @@
                                     'Veri sildindi',
                                     'success'
                                 );
-                                
+                                location.reload();
 
                             } else if (
                                 /* Read more about handling dismissals below */
@@ -145,14 +140,7 @@
                                 )
                             }
                         })
-
-
-
-
-
                     });
-
-
             })
         </script>
         <script>
@@ -161,24 +149,16 @@
                 status_id=$(this).html();
                 if(status_id.trim()=="Pasif")
                 {
-
                     $(this).html('Aktif');
-
                 }
                 if(status_id.trim()=="Aktif")
                 {
-
                     $(this).html("Pasif");
-
                 };
                 $.get("{{ route('admin.product.status') }}",{id:id},function(data,status){
-
                     console.log(data);
                 });
-
             });
-
-
         </script>
     @endpush
 
