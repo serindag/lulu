@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Back;
 
+use App\Http\Controllers\Controller;
 use App\Models\BranchGroup;
 use App\Models\BranchGroupLang;
 use App\Models\Lang;

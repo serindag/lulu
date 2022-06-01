@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Back;
 
+use App\Http\Controllers\Controller;
 use App\Models\Branch;
 use App\Models\BranchGroup;
 use Illuminate\Http\Request;

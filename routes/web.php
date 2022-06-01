@@ -1,15 +1,16 @@
 <?php
 
-use App\Http\Controllers\AdminBranchController;
-use App\Http\Controllers\AdminBranchGroupController;
-use App\Http\Controllers\AdminBranchUserController;
-use App\Http\Controllers\AdminCategoryController;
-use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\AdminFeedbackController;
-use App\Http\Controllers\AdminLoginController;
-use App\Http\Controllers\AdminPopupController;
-use App\Http\Controllers\AdminProductController;
-use App\Http\Controllers\AdminUserController;
+use App\Http\Controllers\Back\AdminBranchController;
+use App\Http\Controllers\Back\AdminBranchGroupController;
+use App\Http\Controllers\Back\AdminBranchUserController;
+use App\Http\Controllers\Back\AdminCategoryController;
+use App\Http\Controllers\Back\AdminDashboardController;
+use App\Http\Controllers\Back\AdminFeedbackController;
+use App\Http\Controllers\Back\AdminLoginController;
+use App\Http\Controllers\Back\AdminPopupController;
+use App\Http\Controllers\Back\AdminProductController;
+use App\Http\Controllers\Back\AdminUserController;
+
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PopupController;
@@ -28,6 +29,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 
 /* User Routes */
  Route::middleware('guest')->group(function () {
@@ -68,62 +70,89 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 
-Route::middleware('admin')->group(function(){
+Route::middleware('admin')->prefix('admin')->name('admin.')->group(function(){
 
-    Route::get('/admin',[AdminDashboardController::class,'index'])->name('admin.dashboard');
-    Route::get('/admin/user',[AdminUserController::class,'form'])->name('admin.user.form');
-    Route::post('/admin/user/save',[AdminUserController::class,'save'])->name('admin.user.save');
+    Route::get('/',[AdminDashboardController::class,'index'])->name('dashboard');
+    Route::get('/logout', [AdminLoginController::class, 'destroy'])->name('logout');
 
-    Route::get('/admin/logout', [AdminLoginController::class, 'destroy'])->name('admin.logout');
+    Route::prefix('user')->name('user.')->group(function(){
 
-    Route::get('admin/branch-group',[AdminBranchGroupController::class,'list'])->name('admin.branchGroup');
-    Route::get('admin/branch-group/new/{id?}',[AdminBranchGroupController::class,'saveform'])->name('admin.branchGroup.saveform');
+        Route::get('/',[AdminUserController::class,'form'])->name('form');
+        Route::post('/save',[AdminUserController::class,'save'])->name('save');
 
-    Route::post('admin/branch-group/new',[AdminBranchGroupController::class,'save'])->name('admin.branchGroup.save');
+    });
+   
 
-    Route::get('admin/branch-group/delete/{id}',[AdminBranchGroupController::class,'delete'])->name('admin.branchGroup.delete');
-    Route::get('admin/branch-group/status',[AdminBranchGroupController::class,'status'])->name('admin.branchGroup.status');
+    
+    Route::prefix('branch-group')->name('branchGroup.')->group(function(){
+
+        Route::get('/',[AdminBranchGroupController::class,'list'])->name('list');
+        Route::get('/new/{id?}',[AdminBranchGroupController::class,'saveform'])->name('saveform');
+        Route::post('/new',[AdminBranchGroupController::class,'save'])->name('save');
+        Route::get('/delete/{id}',[AdminBranchGroupController::class,'delete'])->name('delete');
+        Route::get('/status',[AdminBranchGroupController::class,'status'])->name('status');
+
+    });
+
+    Route::prefix('branch')->name('branch.')->group(function(){
+
+        Route::get('/',[AdminBranchController::class,'list'])->name('list');
+        Route::get('/new/{id?}',[AdminBranchController::class,'saveform'])->name('saveform');
+        Route::post('/new',[AdminBranchController::class,'save'])->name('save');
+        Route::get('/delete/{id}',[AdminBranchController::class,'delete'])->name('delete');
+        Route::get('/status',[AdminBranchController::class,'status'])->name('status');
+
+    });
+
+    Route::prefix('category')->name('category.')->group(function(){
+
+        Route::get('/',[AdminCategoryController::class,'list'])->name('list');
+        Route::post('/',[AdminCategoryController::class,'placement'])->name('placement');
+        Route::get('/new/{id?}',[AdminCategoryController::class,'saveform'])->name('saveform');
+        Route::post('/new',[AdminCategoryController::class,'save'])->name('save');
+        Route::get('/status',[AdminCategoryController::class,'status'])->name('status');
+
+    });
+
+    Route::prefix('branchUser')->name('branchUser.')->group(function(){
+    
+        Route::get('/',[AdminBranchUserController::class,'list'])->name('list');
+        Route::get('/status',[AdminBranchUserController::class,'status'])->name('status');
+        Route::get('/new/{id?}',[AdminBranchUserController::class,'saveform'])->name('saveform');
+        Route::post('/new',[AdminBranchUserController::class,'save'])->name('save');
+        Route::get('/delete/{id}',[AdminBranchUserController::class,'delete'])->name('delete');
+
+    });
+    
+    Route::prefix('popup')->name('popup.')->group(function(){
+
+        Route::get('/',[AdminPopupController::class,'list'])->name('list');
+        Route::get('/status',[AdminPopupController::class,'status'])->name('status');
+        Route::get('/new/{id?}',[AdminPopupController::class,'saveform'])->name('saveform');
+        Route::post('/new',[AdminPopupController::class,'save'])->name('save');
+        Route::get('/delete/{id}',[AdminPopupController::class,'delete'])->name('delete');
+
+    });
+    
+    Route::prefix('product')->name('product.')->group(function(){  
+
+        Route::get('/status',[AdminProductController::class,'status'])->name('status');
+        Route::get('/new/{id?}',[AdminProductController::class,'saveform'])->name('saveform');
+        Route::post('/new',[AdminProductController::class,'save'])->name('save');
+        Route::get('/delete/{id}',[AdminProductController::class,'delete'])->name('delete');
+        Route::get('/{id?}',[AdminProductController::class,'list'])->name('list');
+
+    });
+
+    Route::prefix('feedback')->name('feedback.')->group(function(){ 
+        Route::get('/',[AdminFeedbackController::class,'list'])->name('list');
+        Route::get('/{id?}',[AdminFeedbackController::class,'saveform'])->name('saveform');
+        Route::post('/new',[AdminFeedbackController::class,'save'])->name('save');
+        
+    });
 
 
-
-    Route::get('admin/branch',[AdminBranchController::class,'list'])->name('admin.branch');
-    Route::get('admin/branch/new/{id?}',[AdminBranchController::class,'saveform'])->name('admin.branch.saveform');
-    Route::post('admin/branch/new',[AdminBranchController::class,'save'])->name('admin.branch.save');
-    Route::get('admin/branch/delete/{id}',[AdminBranchController::class,'delete'])->name('admin.branch.delete');
-    Route::get('admin//branch/status',[AdminBranchController::class,'status'])->name('admin.branch.status');
-
-
-    Route::get('admin/category',[AdminCategoryController::class,'list'])->name('admin.category.list');
-    Route::post('admin/category',[AdminCategoryController::class,'placement'])->name('admin.category.placement');
-    Route::get('admin/category/new/{id?}',[AdminCategoryController::class,'saveform'])->name('admin.category.saveform');
-    Route::post('admin/category/new',[AdminCategoryController::class,'save'])->name('admin.category.save');
-    Route::get('admin/category/status',[AdminCategoryController::class,'status'])->name('admin.category.status');
-
-    Route::get('admin/branchUser',[AdminBranchUserController::class,'list'])->name('admin.branchUser.list');
-    Route::get('admin/branchUser/status',[AdminBranchUserController::class,'status'])->name('admin.branchUser.status');
-    Route::get('admin/branchUser/new/{id?}',[AdminBranchUserController::class,'saveform'])->name('admin.branchUser.saveform');
-    Route::post('admin/branchUser/new',[AdminBranchUserController::class,'save'])->name('admin.branchUser.save');
-    Route::get('admin/branchUser/delete/{id}',[AdminBranchUserController::class,'delete'])->name('admin.branchUser.delete');
-
-    Route::get('/admin/popup',[AdminPopupController::class,'list'])->name('admin.popup.list');
-    Route::get('admin/popup/status',[AdminPopupController::class,'status'])->name('admin.popup.status');
-    Route::get('admin/popup/new/{id?}',[AdminPopupController::class,'saveform'])->name('admin.popup.saveform');
-    Route::post('admin/popup/new',[AdminPopupController::class,'save'])->name('admin.popup.save');
-    Route::get('admin/popup/delete/{id}',[AdminPopupController::class,'delete'])->name('admin.popup.delete');
-
-
-    Route::get('admin/product/status',[AdminProductController::class,'status'])->name('admin.product.status');
-    Route::get('admin/product/new/{id?}',[AdminProductController::class,'saveform'])->name('admin.product.saveform');
-
-    Route::post('admin/product/new',[AdminProductController::class,'save'])->name('admin.product.save');
-    Route::get('admin/product/delete/{id}',[AdminProductController::class,'delete'])->name('admin.product.delete');
-
-    Route::get('admin/product/{id?}',[AdminProductController::class,'list'])->name('admin.product.list');
-
-
-    Route::get('admin/feedback',[AdminFeedbackController::class,'list'])->name('admin.feedback.list');
-    Route::get('admin/feedback/{id?}',[AdminFeedbackController::class,'saveform'])->name('admin.feedback.saveform');
-    Route::post('admin/feedback/new',[AdminFeedbackController::class,'save'])->name('admin.feedback.save');
+    
 
 
 });
