@@ -1,5 +1,6 @@
 <x-back.master>
 
+    @push('title') Limonist @endpush
     @push('css')
         <link rel="stylesheet" href="sweetalert2.min.css">
         <style>

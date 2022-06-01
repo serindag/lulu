@@ -1,5 +1,6 @@
 <x-back.master>
 
+    @push('title') Limonist @endpush
     <form action="{{ route('admin.branchUser.save') }}" method="POST">
         @csrf
         @if ($errors->any())

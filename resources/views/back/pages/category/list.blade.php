@@ -1,5 +1,6 @@
 <x-back.master>
 
+    @push('title') Limonist @endpush
     @push('css')
         <link rel="stylesheet" href="{{ asset('dist/assets/css/nestable.css') }}">
 

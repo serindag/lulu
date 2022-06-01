@@ -1,4 +1,5 @@
 <x-back.master>
+    @push('title') Limonist @endpush
     @push('css')
     <style>
         .tox.tox-tinymce.tox-tinymce--toolbar-sticky-off {

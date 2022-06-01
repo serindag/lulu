@@ -1,5 +1,5 @@
 <x-back.master>
-
+    @push('title') Limonist @endpush
 
     <form action="{{ route('admin.branch.save') }}" method="POST">
         @csrf

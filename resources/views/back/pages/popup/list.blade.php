@@ -91,7 +91,7 @@
         </div>
     @endpush
 
-
+    @push('title') Limonist @endpush
 
     @push('js')
         <script src="sweetalert2.min.js"></script>

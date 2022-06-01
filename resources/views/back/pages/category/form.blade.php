@@ -1,5 +1,5 @@
 <x-back.master>
-
+    @push('title') Limonist @endpush
 
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 
