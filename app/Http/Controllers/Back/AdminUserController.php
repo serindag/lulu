@@ -20,7 +20,16 @@ class AdminUserController extends Controller
     }
     public function save(UserRequest $request)
     {
-
+        if(Auth::guard('admin')->user()->email!=$request->email)
+        {
+            $userControl = Admin::where('email',$request->email)->first();
+            if($userControl!=null)
+            {
+                return redirect()->back()->withErrors('Bu mail daha önce kayıtlı'); 
+            }
+            
+        }
+        
        $userControl= Hash::check($request->lastPassword,Auth::guard('admin')->user()->password);
 
         if($userControl==false)

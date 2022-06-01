@@ -1,11 +1,14 @@
 <x-back.master>
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
     @push('css')
-    <style>
-        .tox.tox-tinymce.tox-tinymce--toolbar-sticky-off {
+        <style>
+            .tox.tox-tinymce.tox-tinymce--toolbar-sticky-off {
                 height: 300px !important;
-        }
-    </style>
+            }
+
+        </style>
     @endpush
 
     <div class="mb-4 mt-5">
@@ -19,12 +22,22 @@
             <p>
                 Bu bölümde yapılan açılır modalı düzenleyebilirsiniz.
             </p>
-
         @endif
-        
+
     </div>
 
+    @if ($errors->any())
+        <div class="alert alert-danger mt-5">
 
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+
+
+        </div>
+    @endif
 
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 
@@ -36,10 +49,10 @@
         @endforeach
     </ul>
 
-    <form action="{{route('admin.popup.save')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.popup.save') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        @if($popupLangs!=null)
+        @if ($popupLangs != null)
             <input type="hidden" name="popup_id" value="{{ $popupLangs[0]->popup_id }}">
         @endif
 
@@ -50,15 +63,13 @@
                     id="panel-{{ $lang->name }}" role="tabpanel">
 
                     @if ($popupLangs == null)
-                    
                         <div class="mb-4">
                             <label class="form-label">Popup içeriği:</label>
-                                <textarea class="open-source-plugins" name="names[{{ $lang->id }}]"></textarea>
+                            <textarea class="open-source-plugins" name="names[{{ $lang->id }}]"></textarea>
                         </div>
                     @else
                         @foreach ($popupLangs as $popupLang)
                             @if ($popupLang->lang_id == $lang->id)
-                                
                                 <div class="mb-4">
                                     <label class="form-label">Popup içeriği:</label>
                                     <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{!! $popupLang->translate !!}</textarea>
@@ -69,7 +80,7 @@
                                     <div class="mb-4">
                                         <label class="form-label">Grup Adı:</label>
                                         <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{{ old('description') }}</textarea>
-                                       
+
                                         <input type="hidden" name="id[]" value="{{ $popupLang->id }}">
                                     </div>
                                 @endif
@@ -78,31 +89,28 @@
                     @endif
 
                 </div>
-
-
-                
-
-
             @endforeach
 
             <div class="mb-4">
                 <label class="form-label">Şube:</label>
                 <select name="branch_id" id="" class="form-control">
-                    @foreach($branches as $branch)
-                    <option value="{{$branch->id}}">{{$branch->name}}</option>
+                    <option value="">Şube Seçiniz</option>
+                    @foreach ($branches as $branch)
+                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                     @endforeach
-                    
-                   
+
+
                 </select>
             </div>
             <div class="mb-4">
                 <label class="form-label">Görünlecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
+                    <option value="">Kategori Seçiniz</option>
                     <option value="0">Anasayfa</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
-                    
+
                 </select>
             </div>
             <div class="mb-4">

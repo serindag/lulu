@@ -54,6 +54,10 @@ class AdminPopupController extends Controller
 
     public function save(Request $request)
     {
+        if($request->names[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
+        }
         
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
