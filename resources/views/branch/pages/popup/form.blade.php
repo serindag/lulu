@@ -1,4 +1,4 @@
-<x-back.master>
+<x-branch.master>
     @push('title') Limonist @endpush
     @push('css')
     <style>
@@ -36,7 +36,7 @@
         @endforeach
     </ul>
 
-    <form action="{{route('admin.popup.save')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('user.popup.save')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
         @if($popupLangs!=null)
@@ -85,20 +85,11 @@
 
             @endforeach
 
-            <div class="mb-4">
-                <label class="form-label">Şube:</label>
-                <select name="branch_id" id="" class="form-control">
-                    @foreach($branches as $branch)
-                    <option value="{{$branch->id}}">{{$branch->name}}</option>
-                    @endforeach
-                    
-                   
-                </select>
-            </div>
+            
             <div class="mb-4">
                 <label class="form-label">Görünlecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
-                    <option value="0">Anasayfa</option>
+                    
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
@@ -187,4 +178,4 @@
 
 
 
-</x-back.master>
+</x-branch.master>

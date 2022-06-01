@@ -15,13 +15,22 @@
 
             </div>
         @endif
-        <!--begin::Input group-->
         <div class="mb-4 mt-5">
-            <h5>Kullanıcı Bilgileri</h5>
+        <!--begin::Input group-->
+        @if (!Request::segment(4))
+            <h5>Şube Kullancı Ekle</h5>
             <p>
-                Buradan adınızı,soyadınızı,mail adresinizi ve şifrenizi güncelleyebilirsiniz...
+                Bu bölümde Şube kullancıları ekleyebilirsiniz.
             </p>
+        @else
+            <h5>Şube Kullancı Güncelle</h5>
+            <p>
+                Bu bölümde oluşturulan Şube kullancılarını düzenleyebilirsiniz.
+            </p>
+
+        @endif
         </div>
+
         <div class="mb-4">
             <label class="form-label">Kullancı Adı:</label>
             <input type="text" name="name" value="@isset($user->name) {{ $user->name }} @endisset"
@@ -80,7 +89,14 @@
 
 
         <div class="mb-4">
-            <button type="submit" class="btn btn-light-success">Güncelle</button>
+            <button type="submit" class="btn btn-light-success">
+                @if (!Request::segment(4))
+                Kaydet
+                @else
+                Güncelle
+                @endif
+                
+                </button>
             <a href="{{ route('admin.branchUser.list') }}" class="btn btn-light-danger">İptal</a>
         </div>
 

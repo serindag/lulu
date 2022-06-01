@@ -35,6 +35,7 @@
                 <th width="50%">Şube Adı</th>
                 <th >Şehir</th>
                 <th width="20%">Telefon</th>
+                <th width="20%">Durum</th>
                 <th>İşlemler</th>
 
             </tr>
@@ -47,18 +48,7 @@
                         <td >{{ $branch->city }}</td>
                         <td >{{ $branch->telephone }}</td>
                         <td>
-
-
-                            <span style="float:right;margin-left:5px">
-                                <a  class="button deletebutton"><i
-                                        class="fa-solid fa-trash-can "></i></a>
-                            </span>
-                            <span style="float:right;margin-left:5px">
-                                <a href="{{ route('admin.branch.saveform', $branch->id) }}" class="button"><i
-                                        class="fa-solid fa-pen-to-square"></i></a>
-                            </span>
-
-                            <span  style="float:right;margin-left:5px">
+                            <span  >
                                 <a branch-id="{{ $branch->id }}" status-id="{{ $branch->status }}"  class="button status">
                                     @if($branch->status>0)
                                 Aktif
@@ -67,6 +57,21 @@
                              @endif
                                 </a>
                             </span>
+                        </td>
+                        <td>
+
+                            <span >
+                                <a href="{{ route('admin.branch.saveform', $branch->id) }}" class="button"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+                            </span>
+                            
+                            <span >
+                                <a  class="button deletebutton"><i
+                                        class="fa-solid fa-trash-can "></i></a>
+                            </span>
+                            
+
+                            
 
                         </td>
                     </tr>

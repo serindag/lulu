@@ -1,24 +1,23 @@
 <?php
 
-namespace App\Http\Controllers\Back;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\Category;
 use App\Models\CategoryLang;
-use App\Models\SubCategory;
-use App\Models\Branch;
 use App\Models\Lang;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class AdminCategoryController extends Controller
+class CategoryController extends Controller
 {
-    public function list($id=null)
+    public function list()
     {
-        $categories = Category::root()->orderBy('order', 'ASC')->where('branch_id',$id)->get();
+        $categories = Category::root()->orderBy('order', 'ASC')->where('branch_id',Auth::user()->branch_id)->get();
 
-        return view('back.pages.category.list', compact('categories'));
+        return view('branch.pages.category.list', compact('categories'));
     }
     public function placement(Request $request)
     {
@@ -60,9 +59,13 @@ class AdminCategoryController extends Controller
 
         if ($id != null) {
             $category=Category::where('id',$id)->first();
+            if($category['branch_id']!=Auth::user()->branch_id)
+            {
+                return redirect()->back()->withErrors('Yetkisiz giriş');
+            }
             $categoryLangs = CategoryLang::where('category_id', $id)->get();
         }
-        return view('back.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs','category'));
+        return view('branch.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs','category'));
     }
 
     public function save(Request $request)
@@ -75,7 +78,7 @@ class AdminCategoryController extends Controller
                     if ($lang->name == 'Türkçe') {
                         $categories = new Category();
                         $categories->name = $name;
-                        $categories->branch_id = $request->branch_id;
+                        $categories->branch_id = Auth::user()->branch_id;
                         if($request->hasFile('image')){
                             $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
                             $request->image->move(public_path('dist/assets/media/category'),$imageName);
@@ -111,7 +114,7 @@ class AdminCategoryController extends Controller
             if ($lang->name == 'Türkçe') {
                 $categories = Category::findOrFail($request->category_id);
                 $categories->name = $request->names[$lang->id];
-                $categories->branch_id = $request->branch_id;
+                $categories->branch_id = Auth::user()->branch_id;
                 if($request->hasFile('image')){
                     $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
                     $request->image->move(public_path('dist/assets/media/category'),$imageName);
@@ -121,13 +124,15 @@ class AdminCategoryController extends Controller
                 $categories->save();
             }
         }
-        return redirect()->route('admin.category.list');
+        return redirect()->route('user.category.list');
     }
 
     public function status(Request $request)
     {
         $id= $request->id;
         $status=Category::findOrFail($id);
+        if($status['branch_id']==Auth::user()->branch_id)
+        {
         if($status->status==1)
         {
             $status->status=0;
@@ -139,10 +144,9 @@ class AdminCategoryController extends Controller
         $status->save();
         return "işlem başarılı";
     }
-
-    public function branch()
+    else
     {
-        $branches=Branch::get();
-        return view('back.pages.category.branch',compact('branches'));
+        return "Yetkisiz Giriş";
+    }
     }
 }

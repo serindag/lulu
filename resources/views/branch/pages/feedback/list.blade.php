@@ -1,4 +1,4 @@
-<x-back.master>
+<x-branch.master>
     @push('title')
         Limonist
     @endpush
@@ -61,7 +61,7 @@
                             Okundu
                         @endif
                     </td>
-                    <td><a class="button" href="{{ route('admin.feedback.saveform', $feedback->id) }}"><i
+                    <td><a class="button" href="{{ route('user.feedback.saveform', $feedback->id) }}"><i
                                 class="fa-solid fa-eye"></i></a></td>
 
                 </tr>
@@ -94,4 +94,4 @@
 
 
 
-</x-back.master>
+</x-branch.master>

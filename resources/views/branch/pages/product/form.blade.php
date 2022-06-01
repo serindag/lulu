@@ -1,4 +1,4 @@
-<x-back.master>
+<x-branch.master>
     @push('title') Limonist @endpush
     @push('css')
     <style>
@@ -7,23 +7,6 @@
         }
     </style>
     @endpush
-
-    <div class="mb-4 mt-5">
-        @if ($popupLangs == null)
-            <h5>Popup Ekle</h5>
-            <p>
-                Bu bölümde açılır modal ekleyebilirsiniz.
-            </p>
-        @else
-            <h5>Popup Güncelle</h5>
-            <p>
-                Bu bölümde yapılan açılır modalı düzenleyebilirsiniz.
-            </p>
-
-        @endif
-        
-    </div>
-
 
 
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
@@ -36,11 +19,11 @@
         @endforeach
     </ul>
 
-    <form action="{{route('admin.popup.save')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('user.product.save')}}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        @if($popupLangs!=null)
-            <input type="hidden" name="popup_id" value="{{ $popupLangs[0]->popup_id }}">
+        @if($productLangs!=null)
+            <input type="hidden" name="product_id" value="{{ $productLangs[0]->product_id }}">
         @endif
 
         <div class="tab-content" id="myTabContent">
@@ -49,28 +32,46 @@
                 <div class="tab-pane fade @if ($lang->name == $langFirst->name) show active @endif"
                     id="panel-{{ $lang->name }}" role="tabpanel">
 
-                    @if ($popupLangs == null)
-                    
+                    @if ($productLangs == null)
+
                         <div class="mb-4">
-                            <label class="form-label">Popup içeriği:</label>
-                                <textarea class="open-source-plugins" name="names[{{ $lang->id }}]"></textarea>
+                            <label class="form-label">Ürün Adı:</label>
+                            <input type="text" name="names[{{ $lang->id }}]" class="form-control"/>
+  
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label">Ürün içeriği:</label>
+                                <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]"></textarea>
                         </div>
                     @else
-                        @foreach ($popupLangs as $popupLang)
-                            @if ($popupLang->lang_id == $lang->id)
-                                
+                        @foreach ($productLangs as $productLang)
+                            @if ($productLang->lang_id == $lang->id)
+
                                 <div class="mb-4">
-                                    <label class="form-label">Popup içeriği:</label>
-                                    <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{!! $popupLang->translate !!}</textarea>
-                                    <input type="hidden" name="id[]" value="{{ $popupLang->id }}">
+                                    <label class="form-label">Ürün Adı:</label>
+                                    <input type="text" name="names[{{ $lang->id }}]" value="{{ $productLang->translate_name }}" class="form-control"/>
+        
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label">Ürün İçeriği:</label>
+                                    <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]">{!! $productLang->translate_description !!}</textarea>
+                                    <input type="hidden" name="id[]" value="{{ $productLang->id }}">
                                 </div>
                             @else
-                                @if (count($langs) != count($popupLangs))
-                                    <div class="mb-4">
-                                        <label class="form-label">Grup Adı:</label>
-                                        <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{{ old('description') }}</textarea>
-                                       
-                                        <input type="hidden" name="id[]" value="{{ $popupLang->id }}">
+                                @if (count($langs) != count($productLangs))
+                                <div class="mb-4">
+                                    <label class="form-label">Ürün Adı:</label>
+                                    <input type="text" name="names[{{ $lang->id }}]" class="form-control"/>
+          
+                                </div>    
+                                
+                                <div class="mb-4">
+                                        <label class="form-label">Ürün İçeriği:</label>
+                                        <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]">{{ old('description') }}</textarea>
+
+                                        <input type="hidden" name="id[]" value="{{ $productLang->id }}">
                                     </div>
                                 @endif
                             @endif
@@ -80,48 +81,38 @@
                 </div>
 
 
-                
+
 
 
             @endforeach
 
-            <div class="mb-4">
-                <label class="form-label">Şube:</label>
-                <select name="branch_id" id="" class="form-control">
-                    @foreach($branches as $branch)
-                    <option value="{{$branch->id}}">{{$branch->name}}</option>
-                    @endforeach
-                    
-                   
-                </select>
-            </div>
+            
             <div class="mb-4">
                 <label class="form-label">Görünlecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
-                    <option value="0">Anasayfa</option>
+                   
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach
-                    
+
                 </select>
             </div>
             <div class="mb-4">
-                <div class="row">
-                    <div class="col-md-6">
-                        <label for="">Başlangıç Tarihi</label>
-                        <input type="datetime-local" class="form-control" name="date_start">
-                    </div>
-                    <div class="col-md-6">
-                        <label for="">Bitiş Tarihi</label>
-                        <input type="datetime-local" class="form-control" name="date_end">
-                    </div>
-                </div>
+                <label class="form-label">Fiyat:</label>
+                <input type="text" class="form-control" name="price" value="@isset($product)
+                    {{ $product->price }}
+                @endisset">
+            </div>
+            <div class="mb-4">
+                <label class="form-label">Resim:</label>
+                <img style="width: 200px" src="@isset($product->image) {{asset($product->image)}} @endisset" alt="" class="img-thumbnail rounded img-fluid" >
+                <input type="file" class="form-control" name="image" value="">
             </div>
 
         </div>
         <div class="row">
             <button type="submit" class="btn btn-success me-2 mb-2">
-                @if ($popupLangs == null)
+                @if ($productLangs == null)
                     Kaydet
                 @else
                     Güncelle
@@ -187,4 +178,4 @@
 
 
 
-</x-back.master>
+</x-branch.master>

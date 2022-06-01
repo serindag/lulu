@@ -20,6 +20,10 @@ class AdminLoginController extends Controller
        {
         return redirect()->route('admin.dashboard');
        }
+       else 
+       {
+        return redirect()->route('admin.login.singIn')->withErrors('Lütfen giriş yapınız');
+       }
 
     }
 

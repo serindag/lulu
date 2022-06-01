@@ -14,4 +14,8 @@
 		<link href="{{ asset('dist') }}/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="{{ asset('dist') }}/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
 
+
+
+
         <link rel="stylesheet" href="{{ asset('dist/assets/fontawesome/css/all.css') }}">
+        @stack('css')

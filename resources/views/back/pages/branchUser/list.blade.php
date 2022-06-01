@@ -1,4 +1,5 @@
 <x-back.master>
+    
 
     @push('title') Limonist @endpush
     @push('css')
@@ -25,7 +26,7 @@
     <div class="mb-4 mt-5">
         <h5>Şube Kullancı Yönetimi</h5>
         <p>
-            Buradan şube kullanıcıları ekleyebilir,silebilir ve grubu güncelleyebilirsiniz.
+            Buradan şube kullanıcıları ekleyebilir,silebilir ve güncelleyebilirsiniz.
         </p>
     </div>
 
@@ -47,8 +48,10 @@
                     <tr>
                         <td >{{ $user->name }}</td>
                         <td >{{ $user->email }}</td>
-                        <td >{{ $user->branch->name }}</td>
-                        <td >{{ $user->branch->city }}</td>
+                        <td >@isset($user->branch->name) {{ $user->branch->name }} @endisset</td>
+                        <td >
+                            @isset($user->branch->city){{ $user->branch->city }} @endisset
+                            </td>
                         <td>
                             <span >
                                 <a user-id="{{ $user->id }}" class="button status">

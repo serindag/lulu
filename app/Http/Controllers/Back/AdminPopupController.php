@@ -110,10 +110,10 @@ class AdminPopupController extends Controller
 
     public function delete($id)
     {
-        $deletebranchGroupLang = PopupLang::where('popup_id', $id);
-        $deletebranchGroupLang->delete();
-        $deletebranchGroup = PopupLang::findOrFail($id);
-        $deletebranchGroup->delete();
+        $deletepopupLang = PopupLang::where('popup_id', $id);
+        $deletepopupLang->delete();
+        $deletepopup = Popup::findOrFail($id);
+        $deletepopup->delete();
 
         return "Silme işlemi başarı ile gerçekleşti";
     }

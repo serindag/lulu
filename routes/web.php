@@ -10,10 +10,12 @@ use App\Http\Controllers\Back\AdminLoginController;
 use App\Http\Controllers\Back\AdminPopupController;
 use App\Http\Controllers\Back\AdminProductController;
 use App\Http\Controllers\Back\AdminUserController;
-
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FeedbackController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PopupController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Models\Feedback;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +35,7 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /* User Routes */
  Route::middleware('guest')->group(function () {
+
     Route::get('/user/login',[LoginController::class,'index'])->name('user.login.singIn');
     Route::post('/user/login', [LoginController::class, 'login'])->name('user.login.login');
 
@@ -41,11 +44,62 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 
- Route::middleware('auth')->group(function () {
- Route::get('/user',[DashboardController::class,'index'])->name('user.dashboard');
- Route::get('/user/user',[UserController::class,'form'])->name('user.user.form');
- Route::post('/user/user/save',[UserController::class,'save'])->name('user.user.save');
- Route::get('/user/logout', [LoginController::class, 'destroy'])->name('user.logout');
+ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
+
+ Route::get('/',[DashboardController::class,'index'])->name('dashboard');
+ Route::get('/logout', [LoginController::class, 'destroy'])->name('logout');
+
+ Route::prefix('user')->name('user.')->group(function(){
+
+    Route::get('/',[UserController::class,'form'])->name('form');
+    Route::post('/save',[UserController::class,'save'])->name('save');
+
+ });
+
+ Route::prefix('popup')->name('popup.')->group(function(){
+
+    Route::get('/',[PopupController::class,'list'])->name('list');
+    Route::get('/status',[PopupController::class,'status'])->name('status');
+    Route::get('/new/{id?}',[PopupController::class,'saveform'])->name('saveform');
+    Route::post('/new',[PopupController::class,'save'])->name('save');
+    Route::get('/delete/{id}',[PopupController::class,'delete'])->name('delete');
+
+});
+
+Route::prefix('category')->name('category.')->group(function(){
+
+    Route::get('/',[CategoryController::class,'list'])->name('list');
+    Route::post('/',[CategoryController::class,'placement'])->name('placement');
+    Route::get('/new/{id?}',[CategoryController::class,'saveform'])->name('saveform');
+    Route::post('/new',[CategoryController::class,'save'])->name('save');
+    Route::get('/status',[CategoryController::class,'status'])->name('status');
+
+});
+
+Route::prefix('product')->name('product.')->group(function(){  
+
+    Route::get('/status',[ProductController::class,'status'])->name('status');
+    Route::get('/new/{id?}',[ProductController::class,'saveform'])->name('saveform');
+    Route::post('/new',[ProductController::class,'save'])->name('save');
+    Route::get('/delete/{id}',[ProductController::class,'delete'])->name('delete');
+    Route::get('/{id?}',[ProductController::class,'list'])->name('list');
+
+});
+
+Route::prefix('feedback')->name('feedback.')->group(function(){ 
+    Route::get('/',[FeedbackController::class,'list'])->name('list');
+    Route::get('/{id?}',[FeedbackController::class,'saveform'])->name('saveform');
+    Route::post('/new',[FeedbackController::class,'save'])->name('save');
+    
+});
+
+
+
+
+
+
+
+
 
 });
 
@@ -67,7 +121,6 @@ use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 
 });
-
 
 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function(){
@@ -106,12 +159,13 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function(){
 
     Route::prefix('category')->name('category.')->group(function(){
 
-        Route::get('/',[AdminCategoryController::class,'list'])->name('list');
+        
         Route::post('/',[AdminCategoryController::class,'placement'])->name('placement');
         Route::get('/new/{id?}',[AdminCategoryController::class,'saveform'])->name('saveform');
         Route::post('/new',[AdminCategoryController::class,'save'])->name('save');
         Route::get('/status',[AdminCategoryController::class,'status'])->name('status');
-
+        Route::get('/branch',[AdminCategoryController::class,'branch'])->name('branch');
+        Route::get('/{id?}',[AdminCategoryController::class,'list'])->name('list');
     });
 
     Route::prefix('branchUser')->name('branchUser.')->group(function(){

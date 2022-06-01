@@ -1,6 +1,23 @@
 <x-back.master>
     @push('title') Limonist @endpush
 
+
+    <div class="mb-4 mt-5">
+        @if ($branchGroupLangs == null)
+            <h5>Grup Ekle</h5>
+            <p>
+                Bu bölümde grup ekleyebilirsiniz.
+            </p>
+        @else
+            <h5>Popup Güncelle</h5>
+            <p>
+                Bu bölümde oluşturulan grubu düzenleyebilirsiniz.
+            </p>
+
+        @endif
+        
+    </div>
+
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 
         @foreach ($langs as $lang)

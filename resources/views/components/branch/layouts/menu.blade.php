@@ -1,8 +1,9 @@
+
 <div id="kt_aside" class="aside aside-dark aside-hoverable" data-kt-drawer="true" data-kt-drawer-name="aside" data-kt-drawer-activate="{default: true, lg: false}" data-kt-drawer-overlay="true" data-kt-drawer-width="{default:'200px', '300px': '250px'}" data-kt-drawer-direction="start" data-kt-drawer-toggle="#kt_aside_mobile_toggle">
     <!--begin::Brand-->
     <div class="aside-logo flex-column-auto" id="kt_aside_logo">
         <!--begin::Logo-->
-        <a href="../../demo1/dist/index.html">
+        <a href="{{route('user.dashboard')}}">
             <img alt="Logo" src="{{ asset('src/img/RoundIcons-Free-Set-20.png') }}" class="h-60px logo" />
         </a>
         <!--end::Logo-->
@@ -28,7 +29,7 @@
             <div class="menu menu-column menu-title-gray-800 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500" id="#kt_aside_menu" data-kt-menu="true">
 
                 <div class="menu-item">
-                    <a class="menu-link active" href="#">
+                    <a class="menu-link @if((Request::segment(1)=="user") and  (!Request::segment(2))) active @endif " href="{{route('user.dashboard')}}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/general/gen025.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -40,7 +41,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('user.user.form') }}">
+                    <a class="menu-link @if((Request::segment(1)=="user") and  (Request::segment(2)=="user")) active @endif " href="{{ route('user.user.form') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/art/art002.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -52,7 +53,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="{{ route('admin.popup.list') }}">
+                    <a class="menu-link @if((Request::segment(1)=="user") and  (Request::segment(2)=="popup")) active @endif" href="{{ route('user.popup.list') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/abstract/abs027.svg-->
                             <span class="svg-icon svg-icon-2">
@@ -64,7 +65,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link" href="#">
+                    <a class="menu-link @if((Request::segment(1)=="user") and  (Request::segment(2)=="category")) active @endif"  href="{{ route('user.category.list') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
                             <i class="fa-solid fa-database"></i>
@@ -76,8 +77,10 @@
 
 
 
+                
+
                 <div class="menu-item">
-                    <a class="menu-link" href="#">
+                    <a class="menu-link @if((Request::segment(1)=="user") and  (Request::segment(2)=="feedback")) active @endif" href="{{ route('user.feedback.list') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
                             <i class="fa-solid fa-comment-dots"></i>
@@ -87,38 +90,7 @@
                     </a>
                 </div>
 
-                <div class="menu-item">
-                    <a class="menu-link" href="#">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
-                            <i class="fa-solid fa-star"></i>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Hit's</span>
-                    </a>
-                </div>
 
-                <div class="menu-item">
-                    <a class="menu-link" href="#">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
-                            <i class="fa-solid fa-gauge-high"></i>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Menu CRM</span>
-                    </a>
-                </div>
-
-                <div class="menu-item">
-                    <a class="menu-link" href="#">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
-                            <i class="fa-solid fa-video"></i>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Video Yönetimi</span>
-                    </a>
-                </div>
 
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <span class="menu-link">
@@ -186,4 +158,3 @@
     </div>
     <!--end::Footer-->
 </div>
-

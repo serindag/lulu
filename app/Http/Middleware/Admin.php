@@ -21,7 +21,7 @@ class Admin
 
         if(!Auth::guard('admin')->check())
         {
-            return redirect()->route('admin.login.singIn')->withErrors('Lütfen giriş yapınız');
+            return redirect()->route('admin.login.singIn');
         }
         return $next($request);
     }

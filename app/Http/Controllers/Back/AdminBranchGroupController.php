@@ -72,7 +72,7 @@ class AdminBranchGroupController extends Controller
 
 
         }
-        return redirect()->route('admin.branchGroup');
+        return redirect()->route('admin.branchGroup.list');
     }
 
 

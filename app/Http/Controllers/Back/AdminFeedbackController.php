@@ -27,6 +27,7 @@ class AdminFeedbackController extends Controller
         $feedback=Feedback::findOrFail($id);
         $feedback->status=1;
         $feedback->save();
+        return redirect()->route('admin.feedback.list');
     }
 
 }

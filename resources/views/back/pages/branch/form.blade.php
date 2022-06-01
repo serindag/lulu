@@ -16,13 +16,24 @@
             </div>
         @endif
         <!--begin::Input group-->
-        <div class="mb-4 mt-5">
-            <h5>Şube Ekle</h5>
-            <p>
-                Şube eklemek için kullanılır.
 
-            </p>
+        <div class="mb-4 mt-5">
+            @if (!Request::segment(4))
+                <h5>Şube Ekle</h5>
+                <p>
+                    Bu bölümde şube ekleyebilirsiniz.
+                </p>
+            @else
+                <h5>Şube Güncelle</h5>
+                <p>
+                    Bu bölümde oluşturulan şubeyi düzenleyebilirsiniz.
+                </p>
+    
+            @endif
+            
         </div>
+
+        
         <div class="mb-4">
             <label class="form-label">Şube Adı:</label>
             <input type="text" name="name" value="@if ($branchs != null) {{ $branchs->name }} @endif"
@@ -126,8 +137,14 @@
         <!--end::Input group-->
 
         <div class="mb-4">
-            <button type="submit" class="btn btn-light-success">Güncelle</button>
-            <a href="#" class="btn btn-light-danger">İptal</a>
+            <button type="submit" class="btn btn-light-success">
+                @if (!Request::segment(4))
+                Kaydet
+                @else
+                Güncelle
+                @endif
+                </button>
+            <a href="{{route('admin.branch.list')}}" class="btn btn-light-danger">İptal</a>
         </div>
 
     </form>

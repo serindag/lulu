@@ -1,4 +1,4 @@
-<x-back.master>
+<x-branch.master>
     @push('title') Limonist @endpush
     @push('css')
     <link rel="stylesheet" href="sweetalert2.min.css">
@@ -44,11 +44,12 @@
         <div class="card">
             <div class="card-header">
                 <h2>Mesaj İçeriği</h2>
-                <input type="hidden" name="id" value="{{ $feedback->id }}">
+                
             </div>
             @if ($feedback->status==0)
-                <form action="{{ route('admin.feedback.save') }}" method="POST">
+                <form action="{{ route('user.feedback.save') }}" method="POST">
                   @csrf
+                  <input type="hidden" name="id" value="{{ $feedback->id }}">
             @endif
             
                 <div class="card-body">
@@ -96,7 +97,7 @@
                 <div class="card-footer">
                 
                         
-                        <a href="{{ route('admin.feedback.list') }}" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> İptal</a>
+                        <a href="{{ route('user.feedback.list') }}" class="btn btn-danger"><i class="fa-solid fa-arrow-left"></i> İptal</a>
                         @if ($feedback->status==0)
                         <button type="submit" class="btn btn-primary"><i class="fa-solid fa-check"></i> İncelendi</button>
                         @endif
@@ -111,15 +112,4 @@
 
 
 
-
-
-    
-
-
-
-    
-
-
-
-
-</x-back.master>
+</x-branch.master>

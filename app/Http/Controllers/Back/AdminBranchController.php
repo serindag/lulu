@@ -46,7 +46,7 @@ class AdminBranchController extends Controller
         $branchs->service_end=$request->service_end;
         $branchs->branch_group_id=$request->branch_group_id;
         $branchs->save();
-        return redirect()->route('admin.branch');
+        return redirect()->route('admin.branch.list');
 
     }
 
