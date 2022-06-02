@@ -25,22 +25,22 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-         $password= $this->request->all()["newPassword"];
-        
-       
+        $password = $this->request->all()["newPassword"];
 
-            $rules=[
-                'name' => ['required','min:2','max:80'],
-                'email'=>['required','email'],
-                'newPassword'=>['required_with:newPasswordRepeat','same:newPasswordRepeat',
+
+
+        $rules = [
+            'name' => ['required', 'min:2', 'max:80'],
+            'email' => ['required', 'email'],
+            'newPassword' => [
+                'required_with:newPasswordRepeat', 'same:newPasswordRepeat',
 
             ],
-            ];
+        ];
 
-            if(!is_null($password))
-            {
-                $rules['newPassword'] = ['regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!+%*#?&]/','min:8'];
-            }
+        if (!is_null($password)) {
+            $rules['newPassword'] = ['regex:/[a-z]/', 'regex:/[A-Z]/', 'regex:/[0-9]/', 'regex:/[@$!+%*#?&]/', 'min:8'];
+        }
 
 
 
@@ -49,15 +49,15 @@ class UserRequest extends FormRequest
     public function messages()
     {
         return [
-        'name.required'=>'Kullanıcı adı boş geçilemez',
-        'name.min'=>'Kullanıcı adı minimum 2 karakter olabilir.',
-        'name.max'=>'Kullanıcı adı maksimum 80 karakter olabilir.',
-        'email.required'=>'E-mail boş geçilemez',
-        'email.email'=>'Geçerli bir e-mail giriniz',
-        'same'=>'Yeni şifre ve yeni şifre tekrarı eşleşmelidir.',
-        'required_with'=>'Yeni şifre ve yeni şifre tekrarı eşleşmelidir.',
-        'newPassword.regex'=>'Şifre büyük küçük harf,rakamlar ve simgelerden oluşmalıdır.',
-        'newPassword.min'=>'Şifre 8 karekterli olmalıdır.',
+            'name.required' => 'Kullanıcı adı boş geçilemez',
+            'name.min' => 'Kullanıcı adı minimum 2 karakter olabilir.',
+            'name.max' => 'Kullanıcı adı maksimum 80 karakter olabilir.',
+            'email.required' => 'E-mail boş geçilemez',
+            'email.email' => 'Geçerli bir e-mail giriniz',
+            'same' => 'Yeni şifre ve yeni şifre tekrarı eşleşmelidir.',
+            'required_with' => 'Yeni şifre ve yeni şifre tekrarı eşleşmelidir.',
+            'newPassword.regex' => 'Şifre büyük küçük harf,rakamlar ve simgelerden oluşmalıdır.',
+            'newPassword.min' => 'Şifre 8 karekterli olmalıdır.',
 
 
 

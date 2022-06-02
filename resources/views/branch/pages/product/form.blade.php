@@ -1,11 +1,14 @@
 <x-branch.master>
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
     @push('css')
-    <style>
-        .tox.tox-tinymce.tox-tinymce--toolbar-sticky-off {
+        <style>
+            .tox.tox-tinymce.tox-tinymce--toolbar-sticky-off {
                 height: 300px !important;
-        }
-    </style>
+            }
+
+        </style>
     @endpush
     @if ($errors->any())
         <div class="alert alert-danger mt-5">
@@ -31,10 +34,10 @@
         @endforeach
     </ul>
 
-    <form action="{{route('user.product.save')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('user.product.save') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        @if($productLangs!=null)
+        @if ($productLangs != null)
             <input type="hidden" name="product_id" value="{{ $productLangs[0]->product_id }}">
         @endif
 
@@ -45,25 +48,24 @@
                     id="panel-{{ $lang->name }}" role="tabpanel">
 
                     @if ($productLangs == null)
-
                         <div class="mb-4">
                             <label class="form-label">Ürün Adı:</label>
-                            <input type="text" name="names[{{ $lang->id }}]" class="form-control"/>
-  
+                            <input type="text" name="names[{{ $lang->id }}]" class="form-control" />
+
                         </div>
 
                         <div class="mb-4">
                             <label class="form-label">Ürün içeriği:</label>
-                                <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]"></textarea>
+                            <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]"></textarea>
                         </div>
                     @else
                         @foreach ($productLangs as $productLang)
                             @if ($productLang->lang_id == $lang->id)
-
                                 <div class="mb-4">
                                     <label class="form-label">Ürün Adı:</label>
-                                    <input type="text" name="names[{{ $lang->id }}]" value="{{ $productLang->translate_name }}" class="form-control"/>
-        
+                                    <input type="text" name="names[{{ $lang->id }}]"
+                                        value="{{ $productLang->translate_name }}" class="form-control" />
+
                                 </div>
 
                                 <div class="mb-4">
@@ -73,13 +75,13 @@
                                 </div>
                             @else
                                 @if (count($langs) != count($productLangs))
-                                <div class="mb-4">
-                                    <label class="form-label">Ürün Adı:</label>
-                                    <input type="text" name="names[{{ $lang->id }}]" class="form-control"/>
-          
-                                </div>    
-                                
-                                <div class="mb-4">
+                                    <div class="mb-4">
+                                        <label class="form-label">Ürün Adı:</label>
+                                        <input type="text" name="names[{{ $lang->id }}]" class="form-control" />
+
+                                    </div>
+
+                                    <div class="mb-4">
                                         <label class="form-label">Ürün İçeriği:</label>
                                         <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]">{{ old('description') }}</textarea>
 
@@ -91,33 +93,29 @@
                     @endif
 
                 </div>
-
-
-
-
-
             @endforeach
 
-            
+
             <div class="mb-4">
                 <label class="form-label">Görünlecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
-                   <option value="">Kategori Seçiniz</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    <option value="">Kategori Seçiniz</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
 
                 </select>
             </div>
             <div class="mb-4">
                 <label class="form-label">Fiyat:</label>
-                <input type="text" class="form-control" name="price" value="@isset($product)
-                    {{ $product->price }}
-                @endisset">
+                <input type="text" class="form-control" name="price"
+                    value="@isset($product) {{ $product->price }} @endisset">
             </div>
             <div class="mb-4">
                 <label class="form-label">Resim:</label>
-                <img style="width: 200px" src="@isset($product->image) {{asset($product->image)}} @endisset" alt="" class="img-thumbnail rounded img-fluid" >
+                <img style="width: 200px"
+                    src="@isset($product->image) {{ asset($product->image) }} @endisset" alt=""
+                    class="img-thumbnail rounded img-fluid">
                 <input type="file" class="form-control" name="image" value="">
             </div>
 

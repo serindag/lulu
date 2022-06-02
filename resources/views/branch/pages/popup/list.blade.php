@@ -90,7 +90,8 @@
     @push('newedit')
         <div class="d-flex align-items-center py-1">
             <!--begin::Button-->
-            <a href="{{ route('user.popup.saveform') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i> Yeni
+            <a href="{{ route('user.popup.saveform') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i>
+                Yeni
                 Ekle</a>
             <!--end::Button-->
         </div>
@@ -109,56 +110,30 @@
                 $('.example').DataTable();
             });
         </script>
+
+
         <script>
             $(".deletebutton").click(function() {
-                $.get("{{ isset($popup) ? route('user.popup.delete', $popup->id) : '' }}",
-                    function(data, status) {
-
-                        const swalWithBootstrapButtons = Swal.mixin({
-                            customClass: {
-                                confirmButton: 'btn btn-success',
-                                cancelButton: 'btn btn-danger'
-                            },
-                            buttonsStyling: false
-                        })
-
-                        swalWithBootstrapButtons.fire({
-                            title: 'Silinsin mi',
-                            text: "Veri Kalıcı olarak silinecektir.",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: 'Evet, Sil',
-                            cancelButtonText: 'İptal',
-                            reverseButtons: true
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                swalWithBootstrapButtons.fire(
-                                    'Silindi!',
-                                    'Veri sildindi',
-                                    'success'
-                                );
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 2000);
-
-                            } else if (
-                                /* Read more about handling dismissals below */
-                                result.dismiss === Swal.DismissReason.cancel
-                            ) {
-                                swalWithBootstrapButtons.fire(
-                                    'İptal',
-                                    'Veri silme işlemi iptal edildi.',
-                                    'error'
-                                )
-                            }
-                        })
 
 
-                    });
+                if (confirm("Silinsin mi?") == true) {
+
+                    $.get("{{ isset($popup) ? route('user.popup.delete', $popup->id) : '' }}",
+                        function(data, status) {
+                            alert(data);
+                            location.reload();
+
+
+                        });
+
+                } else {
+                    alert('işlem İptal Edildi');
+                }
 
 
             })
         </script>
+
         <script>
             $(".status").click(function() {
                 id = $(this)[0].getAttribute('popup-id');

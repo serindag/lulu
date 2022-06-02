@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('lang_id');
             $table->string('translate_name');
             $table->longText('translate_description');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

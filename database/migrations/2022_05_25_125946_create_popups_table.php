@@ -21,7 +21,9 @@ return new class extends Migration
             $table->integer('category_id');
             $table->dateTime('date_start');
             $table->dateTime('date_end');
+            $table->softDeletes();
             $table->timestamps();
+            
         });
     }
 

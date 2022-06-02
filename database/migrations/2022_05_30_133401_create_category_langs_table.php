@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('category_id');
             $table->integer('lang_id');
             $table->string('translate');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

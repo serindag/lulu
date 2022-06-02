@@ -22,6 +22,7 @@ return new class extends Migration
             $table->rememberToken();
             $table->tinyInteger('status')->default(0);
             $table->tinyInteger('branch_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

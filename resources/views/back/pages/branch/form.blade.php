@@ -1,9 +1,11 @@
 <x-back.master>
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
 
     <form action="{{ route('admin.branch.save') }}" method="POST">
         @csrf
-      
+
         <!--begin::Input group-->
 
         <div class="mb-4 mt-5">
@@ -17,23 +19,22 @@
                 <p>
                     Bu bölümde oluşturulan şubeyi düzenleyebilirsiniz.
                 </p>
-    
             @endif
-            
+
         </div>
         @if ($errors->any())
-        <div class="alert alert-danger mt-5">
+            <div class="alert alert-danger mt-5">
 
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li> {{ $error }}</li>
-                @endforeach
-            </ul>
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li> {{ $error }}</li>
+                    @endforeach
+                </ul>
 
 
-        </div>
-    @endif
-        
+            </div>
+        @endif
+
         <div class="mb-4">
             <label class="form-label">Şube Adı:</label>
             <input type="text" name="name" value="@if ($branchs != null) {{ $branchs->name }} @endif"
@@ -52,7 +53,7 @@
                     @if ($branchGroups->all() == null)
                         <option value="">Lütfen grup ekleniniz.</option>
                     @else
-                    <option value="">Lütfen Grup Seçiniz</option>
+                        <option value="">Lütfen Grup Seçiniz</option>
                         @foreach ($branchGroups as $group)
                             @if ($group->id == $branchs->branch_group_id)
                                 <option selected value="{{ $group->id }}">{{ $group->name }}</option>
@@ -65,7 +66,7 @@
                     @if ($branchGroups->all() == null)
                         <option value="">Lütfen grup ekleniniz.</option>
                     @else
-                    <option value="">Lütfen Grup Seçiniz</option>
+                        <option value="">Lütfen Grup Seçiniz</option>
                         @foreach ($branchGroups as $group)
                             <option value="{{ $group->id }}">{{ $group->name }}</option>
                         @endforeach
@@ -142,12 +143,12 @@
         <div class="mb-4">
             <button type="submit" class="btn btn-light-success">
                 @if (!Request::segment(4))
-                Kaydet
+                    Kaydet
                 @else
-                Güncelle
+                    Güncelle
                 @endif
-                </button>
-            <a href="{{route('admin.branch.list')}}" class="btn btn-light-danger">İptal</a>
+            </button>
+            <a href="{{ route('admin.branch.list') }}" class="btn btn-light-danger">İptal</a>
         </div>
 
     </form>

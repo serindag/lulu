@@ -21,16 +21,13 @@ class AdminPopupController extends Controller
 
     public function status(Request $request)
     {
-        $id= $request->id;
-        
-        $status=Popup::findOrFail($id);
-        if($status->status==1)
-        {
-            $status->status=0;
+        $id = $request->id;
 
-        }else
-        {
-            $status->status=1;
+        $status = Popup::findOrFail($id);
+        if ($status->status == 1) {
+            $status->status = 0;
+        } else {
+            $status->status = 1;
         }
         $status->save();
         return "işlem başarılı";
@@ -39,27 +36,25 @@ class AdminPopupController extends Controller
     public function saveform($id = null)
     {
         $popupLangs = null;
-        $popup=null;
+        $popup = null;
         $langs = Lang::get();
         $langFirst = Lang::orderBy('order', 'asc')->first();
-        $categories=Category::get();
-        $branches=Branch::get();
+        $categories = Category::get();
+        $branches = Branch::get();
 
         if ($id != null) {
-            $popup=Popup::where('id',$id)->first();
+            $popup = Popup::where('id', $id)->first();
             $popupLangs = PopupLang::where('popup_id', $id)->get();
         }
-        return view('back.pages.popup.form', compact('langs', 'langFirst', 'popupLangs','popup','categories','branches'));
-        
+        return view('back.pages.popup.form', compact('langs', 'langFirst', 'popupLangs', 'popup', 'categories', 'branches'));
     }
 
     public function save(AdminPopupRequest $request)
     {
-        if($request->names[1]==null)
-        {
+        if ($request->names[1] == null) {
             return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
         }
-        
+
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
                 if (!is_null($name)) {
@@ -73,7 +68,7 @@ class AdminPopupController extends Controller
                         $popups->date_end = $request->date_end;
                         $popups->save();
                     }
-                   
+
                     $lastGroup = Popup::orderBy('id', 'DESC')->first();
                     $popupLang = new PopupLang();
                     $popupLang->lang_id = (int)$key;
@@ -85,30 +80,29 @@ class AdminPopupController extends Controller
         } else {
 
             $i = 0;
-            
+
             foreach ($request->names as $name) {
-              
+
                 if (!is_null($name)) {
-                   
+
                     $popupLang = PopupLang::findOrFail($request->id[$i++]);
                     $popupLang->translate = $name;
                     $popupLang->save();
                 }
             }
-            
-            
-          
-                $lang = Lang::where('name', 'Türkçe')->first();
-                    if ($lang->name == 'Türkçe') {
-                        $popups=Popup::findOrFail($request->popup_id);
-                        $popups->description = $request->names[$lang->id];
-                        $popups->branch_id = $request->branch_id;
-                        $popups->category_id = $request->category_id;
-                        $popups->date_start = $request->date_start;
-                        $popups->date_end = $request->date_end;
-                        $popups->save();
-                    }
 
+
+
+            $lang = Lang::where('name', 'Türkçe')->first();
+            if ($lang->name == 'Türkçe') {
+                $popups = Popup::findOrFail($request->popup_id);
+                $popups->description = $request->names[$lang->id];
+                $popups->branch_id = $request->branch_id;
+                $popups->category_id = $request->category_id;
+                $popups->date_start = $request->date_start;
+                $popups->date_end = $request->date_end;
+                $popups->save();
+            }
         }
         return redirect()->route('admin.popup.list');
     }

@@ -23,23 +23,23 @@ class ProductRequest extends FormRequest
      */
     public function rules()
     {
-        $rules=[
-            
-            'category_id' =>['required'],
-            'price'=>['required','regex:/^\d+(\.\d{1,2})?$/'],
+        $rules = [
+
+            'category_id' => ['required'],
+            'price' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
             'image' => ['image', 'max:1024', 'mimes:png,jpg,jpeg'],
 
         ];
-        
+
         return $rules;
     }
     public function messages()
     {
         return [
-            
-            'category_id.required'=>'Lütfen Kategori Seçiniz',
-            'price.required'=>'Fiyat Boş Geçilmez',
-            'price.regex'=>'Fiyat Numaralardan Oluşmalıdır.',
+
+            'category_id.required' => 'Lütfen Kategori Seçiniz',
+            'price.required' => 'Fiyat Boş Geçilmez',
+            'price.regex' => 'Fiyat Numaralardan Oluşmalıdır.',
             'image.image' => 'Lütfen resim dosyası giriniz.',
             'image.required' => 'Resim Boş Geçilemez',
             'image.max' => '1 MB den büyük resim yüklenemez',

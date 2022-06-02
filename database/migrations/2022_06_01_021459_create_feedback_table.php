@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telephone');
             $table->text('message');
             $table->integer('status')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

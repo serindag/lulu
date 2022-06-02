@@ -1,4 +1,3 @@
-
 <div class="toolbar" id="kt_toolbar">
     <!--begin::Container-->
     <div id="kt_toolbar_container" class="container-fluid d-flex flex-stack">
@@ -8,11 +7,11 @@
             class="page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0">
             <!--begin::Title-->
 
-            
+
 
             <h1 class="d-flex align-items-center text-dark fw-bolder fs-3 my-1">
-                
-                
+
+
                 Anasayfa
 
 
@@ -21,28 +20,27 @@
                 <span class="h-20px border-gray-200 border-start ms-3 mx-2"></span>
                 <!--end::Separator-->
                 <!--begin::Description-->
-                @if(Request::segment(1)=="admin" and !Request::segment(2))
-
-                @endif  
-                @if(Request::segment(1)=="admin" and Request::segment(2)=="user")
+                @if (Request::segment(1) == 'admin' and !Request::segment(2))
+                @endif
+                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'user')
                     <small class="text-muted fs-7 fw-bold my-1 ms-1">Kullanıcı Bilgileri</small>
-                @endif  
-                @if(Request::segment(1)=="admin" and Request::segment(2)=="popup")
+                @endif
+                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'popup')
                     <small class="text-muted fs-7 fw-bold my-1 ms-1">Popup Yönetimi</small>
-                @endif  
-                @if(Request::segment(1)=="admin" and Request::segment(2)=="category")
+                @endif
+                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'category')
                     <small class="text-muted fs-7 fw-bold my-1 ms-1">Havuz Veri Yönetimi</small>
-                @endif  
-                @if(Request::segment(1)=="admin" and Request::segment(2)=="branch-group" or Request::segment(2)=="branch" or Request::segment(2)=="branchUser")
+                @endif
+                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'branch-group' or Request::segment(2) == 'branch' or Request::segment(2) == 'branchUser')
                     <small class="text-muted fs-7 fw-bold my-1 ms-1">Şube Grup Yönetimi</small>
-                @endif  
-                @if(Request::segment(1)=="admin" and Request::segment(2)=="feedback" )
+                @endif
+                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'feedback')
                     <small class="text-muted fs-7 fw-bold my-1 ms-1">Feedback Yönetimi</small>
-                @endif  
-                @if(Request::segment(1)=="admin" and Request::segment(2)=="import" )
+                @endif
+                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'import')
                     <small class="text-muted fs-7 fw-bold my-1 ms-1">Yedekleme</small>
-                @endif  
-                
+                @endif
+
                 <!--end::Description-->
             </h1>
             <!--end::Title-->
@@ -52,7 +50,7 @@
 
         @stack('newedit')
 
-       
+
 
 
 

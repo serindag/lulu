@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Models\Branch;
 use App\Models\BranchGroup;
 use App\Models\BranchGroupLang;
 use App\Models\Lang;
@@ -12,6 +13,8 @@ class AdminBranchGroupController extends Controller
 {
     public function list()
     {
+
+
 
         $branchGroups = BranchGroup::get();
         return view('back.pages.branchGroup.list', compact('branchGroups'));
@@ -30,11 +33,10 @@ class AdminBranchGroupController extends Controller
 
     public function save(Request $request)
     {
-        if($request->names[1]==null)
-        {
+        if ($request->names[1] == null) {
             return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
         }
-       
+
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
                 if (!is_null($name)) {
@@ -54,7 +56,7 @@ class AdminBranchGroupController extends Controller
             }
         } else {
 
-            
+
 
             $i = 0;
             foreach ($request->names as $name) {
@@ -65,16 +67,12 @@ class AdminBranchGroupController extends Controller
                     $branchGroupsLang->save();
                 }
             }
-                $lang = Lang::where('name', 'Türkçe')->first();
-                    if ($lang->name == 'Türkçe') {
-                        $branchGroups=BranchGroup::findOrFail($request->branchGroup_id);
-                        $branchGroups->name = $request->names[$lang->id];
-                        $branchGroups->save();
-                    }
-
-
-
-
+            $lang = Lang::where('name', 'Türkçe')->first();
+            if ($lang->name == 'Türkçe') {
+                $branchGroups = BranchGroup::findOrFail($request->branchGroup_id);
+                $branchGroups->name = $request->names[$lang->id];
+                $branchGroups->save();
+            }
         }
         return redirect()->route('admin.branchGroup.list');
     }
@@ -84,25 +82,28 @@ class AdminBranchGroupController extends Controller
 
     public function delete($id)
     {
-        $deletebranchGroupLang = BranchGroupLang::where('branchGroup_id', $id);
-        $deletebranchGroupLang->delete();
-        $deletebranchGroup = BranchGroup::findOrFail($id);
-        $deletebranchGroup->delete();
 
-        return "Silme işlemi başarı ile gerçekleşti";
+        $search = Branch::where('branch_group_id', $id)->get();
+        if (count($search) > 0) {
+            return "Silme işleminin yapılabilmesi için Şubeler silinmelidir.";
+        } else {
+
+            $deletebranchGroupLang = BranchGroupLang::where('branchGroup_id', $id);
+            $deletebranchGroupLang->delete();
+            $deletebranchGroup = BranchGroup::findOrFail($id);
+            $deletebranchGroup->delete();
+            return "Silme işlemi başarı ile gerçekleşti";
+        }
     }
 
     public function status(Request $request)
     {
-        $id= $request->id;
-        $status=BranchGroup::findOrFail($id);
-        if($status->status==1)
-        {
-            $status->status=0;
-
-        }else
-        {
-            $status->status=1;
+        $id = $request->id;
+        $status = BranchGroup::findOrFail($id);
+        if ($status->status == 1) {
+            $status->status = 0;
+        } else {
+            $status->status = 1;
         }
         $status->save();
         return "işlem başarılı";

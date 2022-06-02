@@ -24,16 +24,15 @@ class CategoryRequest extends FormRequest
     public function rules()
     {
         $rules = [
-           
+
             'image' => ['image', 'max:1024', 'mimes:png,jpg,jpeg'],
 
         ];
 
         if (!isset($this->request->all()["id"])) {
 
-            
-                $rules['image'] = ['required'];
-            
+
+            $rules['image'] = ['required'];
         }
 
 
@@ -42,7 +41,7 @@ class CategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            
+
             'image.image' => 'Lütfen resim dosyası giriniz.',
             'image.required' => 'Resim Boş Geçilemez',
             'image.max' => '1 MB den büyük resim yüklenemez',

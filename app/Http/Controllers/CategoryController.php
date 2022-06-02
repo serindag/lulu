@@ -7,6 +7,7 @@ use App\Models\Branch;
 use App\Models\Category;
 use App\Models\CategoryLang;
 use App\Models\Lang;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
@@ -16,7 +17,7 @@ class CategoryController extends Controller
 {
     public function list()
     {
-        $categories = Category::root()->orderBy('order', 'ASC')->where('branch_id',Auth::user()->branch_id)->get();
+        $categories = Category::root()->orderBy('order', 'ASC')->where('branch_id', Auth::user()->branch_id)->get();
 
         return view('branch.pages.category.list', compact('categories'));
     }
@@ -53,29 +54,27 @@ class CategoryController extends Controller
     public function saveform($id = null)
     {
         $categoryLangs = null;
-        $category=null;
+        $category = null;
         $langs = Lang::get();
         $langFirst = Lang::orderBy('order', 'asc')->first();
         $branchs = Branch::get();
 
         if ($id != null) {
-            $category=Category::where('id',$id)->first();
-            if($category['branch_id']!=Auth::user()->branch_id)
-            {
+            $category = Category::where('id', $id)->first();
+            if ($category['branch_id'] != Auth::user()->branch_id) {
                 return redirect()->back()->withErrors('Yetkisiz giriş');
             }
             $categoryLangs = CategoryLang::where('category_id', $id)->get();
         }
-        return view('branch.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs','category'));
+        return view('branch.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs', 'category'));
     }
 
     public function save(CategoryRequest $request)
     {
-        if($request->names[1]==null)
-        {
+        if ($request->names[1] == null) {
             return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
         }
-        
+
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
 
@@ -85,12 +84,11 @@ class CategoryController extends Controller
                         $categories = new Category();
                         $categories->name = $name;
                         $categories->branch_id = Auth::user()->branch_id;
-                        if($request->hasFile('image')){
-                            $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
-                            $request->image->move(public_path('dist/assets/media/category'),$imageName);
-                            $categories->image='dist/assets/media/category/'.$imageName;
-                
-                        }    
+                        if ($request->hasFile('image')) {
+                            $imageName = Str::slug($name, '-') . '.' . $request->image->getClientOriginalExtension();
+                            $request->image->move(public_path('dist/assets/media/category'), $imageName);
+                            $categories->image = 'dist/assets/media/category/' . $imageName;
+                        }
 
 
                         $categories->save();
@@ -121,11 +119,10 @@ class CategoryController extends Controller
                 $categories = Category::findOrFail($request->category_id);
                 $categories->name = $request->names[$lang->id];
                 $categories->branch_id = Auth::user()->branch_id;
-                if($request->hasFile('image')){
-                    $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
-                    $request->image->move(public_path('dist/assets/media/category'),$imageName);
-                    $categories->image='dist/assets/media/category/'.$imageName;
-        
+                if ($request->hasFile('image')) {
+                    $imageName = Str::slug($name, '-') . '.' . $request->image->getClientOriginalExtension();
+                    $request->image->move(public_path('dist/assets/media/category'), $imageName);
+                    $categories->image = 'dist/assets/media/category/' . $imageName;
                 }
                 $categories->save();
             }
@@ -135,24 +132,41 @@ class CategoryController extends Controller
 
     public function status(Request $request)
     {
-        $id= $request->id;
-        $status=Category::findOrFail($id);
-        if($status['branch_id']==Auth::user()->branch_id)
-        {
-        if($status->status==1)
-        {
-            $status->status=0;
-
-        }else
-        {
-            $status->status=1;
+        $id = $request->id;
+        $status = Category::findOrFail($id);
+        if ($status['branch_id'] == Auth::user()->branch_id) {
+            if ($status->status == 1) {
+                $status->status = 0;
+            } else {
+                $status->status = 1;
+            }
+            $status->save();
+            return "işlem başarılı";
+        } else {
+            return "Yetkisiz Giriş";
         }
-        $status->save();
-        return "işlem başarılı";
     }
-    else
+
+
+    public function delete($id)
     {
-        return "Yetkisiz Giriş";
-    }
+
+        $deletecategory = Category::findOrFail($id);
+        if ($deletecategory['branch_id'] == Auth::user()->branch_id) {
+
+            $search = Product::where('category_id', $id)->get();
+            if (count($search) > 0) {
+                return "Silme işleminin yapılabilmesi için ürünlerin silinmelidir.";
+            } else {
+
+                $deletebranchGroupLang = CategoryLang::where('category_id', $id);
+                $deletebranchGroupLang->delete();
+                $deletebranchGroup = Category::findOrFail($id);
+                $deletebranchGroup->delete();
+                return "Silme işlemi başarı ile gerçekleşti";
+            }
+        } else {
+            return "Yetkisiz Giriş";
+        }
     }
 }

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer("branch_id");
             $table->integer("category_id");
             $table->integer('status')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

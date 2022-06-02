@@ -21,6 +21,7 @@ return new class extends Migration
             $table->integer('order')->default(0);
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->integer('branch_id');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -83,7 +83,7 @@
                 @if (count($branchs) == 0)
                     <option value="">Lütfen Şube Ekleyiniz</option>
                 @else
-                <option value="">Lütfen Şube Seçiniz</option>
+                    <option value="">Lütfen Şube Seçiniz</option>
                     @foreach ($branchs as $branch)
                         <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                     @endforeach
@@ -96,8 +96,9 @@
 
         <div class="row mb-2">
             <label for="">Kategori Resmi</label>
-            <img style="width: 200px" src="@isset($category->image) {{ asset($category->image) }} @endisset"
-                alt="" class="img-thumbnail rounded img-fluid">
+            <img style="width: 200px"
+                src="@isset($category->image) {{ asset($category->image) }} @endisset" alt=""
+                class="img-thumbnail rounded img-fluid">
             <input class="form-control" type="file" name="image">
         </div>
 

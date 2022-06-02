@@ -9,15 +9,16 @@ use App\Models\CategoryLang;
 use App\Models\SubCategory;
 use App\Models\Branch;
 use App\Models\Lang;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 
 class AdminCategoryController extends Controller
 {
-    public function list($id=null)
+    public function list($id = null)
     {
-        $categories = Category::root()->orderBy('order', 'ASC')->where('branch_id',$id)->get();
+        $categories = Category::root()->orderBy('order', 'ASC')->where('branch_id', $id)->get();
 
         return view('back.pages.category.list', compact('categories'));
     }
@@ -53,28 +54,27 @@ class AdminCategoryController extends Controller
     }
     public function saveform($id = null)
     {
-        
+
 
         $categoryLangs = null;
-        $category=null;
+        $category = null;
         $langs = Lang::get();
         $langFirst = Lang::orderBy('order', 'asc')->first();
         $branchs = Branch::get();
 
         if ($id != null) {
-            $category=Category::where('id',$id)->first();
+            $category = Category::where('id', $id)->first();
             $categoryLangs = CategoryLang::where('category_id', $id)->get();
         }
-        return view('back.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs','category'));
+        return view('back.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs', 'category'));
     }
 
     public function save(AdminCategoryRequest $request)
     {
-        if($request->names[1]==null)
-        {
+        if ($request->names[1] == null) {
             return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
         }
-        
+
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
 
@@ -84,12 +84,11 @@ class AdminCategoryController extends Controller
                         $categories = new Category();
                         $categories->name = $name;
                         $categories->branch_id = $request->branch_id;
-                        if($request->hasFile('image')){
-                            $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
-                            $request->image->move(public_path('dist/assets/media/category'),$imageName);
-                            $categories->image='dist/assets/media/category/'.$imageName;
-                
-                        }    
+                        if ($request->hasFile('image')) {
+                            $imageName = Str::slug($name, '-') . '.' . $request->image->getClientOriginalExtension();
+                            $request->image->move(public_path('dist/assets/media/category'), $imageName);
+                            $categories->image = 'dist/assets/media/category/' . $imageName;
+                        }
 
 
                         $categories->save();
@@ -120,11 +119,10 @@ class AdminCategoryController extends Controller
                 $categories = Category::findOrFail($request->category_id);
                 $categories->name = $request->names[$lang->id];
                 $categories->branch_id = $request->branch_id;
-                if($request->hasFile('image')){
-                    $imageName=Str::slug($name,'-').'.'.$request->image->getClientOriginalExtension();
-                    $request->image->move(public_path('dist/assets/media/category'),$imageName);
-                    $categories->image='dist/assets/media/category/'.$imageName;
-        
+                if ($request->hasFile('image')) {
+                    $imageName = Str::slug($name, '-') . '.' . $request->image->getClientOriginalExtension();
+                    $request->image->move(public_path('dist/assets/media/category'), $imageName);
+                    $categories->image = 'dist/assets/media/category/' . $imageName;
                 }
                 $categories->save();
             }
@@ -134,15 +132,12 @@ class AdminCategoryController extends Controller
 
     public function status(Request $request)
     {
-        $id= $request->id;
-        $status=Category::findOrFail($id);
-        if($status->status==1)
-        {
-            $status->status=0;
-
-        }else
-        {
-            $status->status=1;
+        $id = $request->id;
+        $status = Category::findOrFail($id);
+        if ($status->status == 1) {
+            $status->status = 0;
+        } else {
+            $status->status = 1;
         }
         $status->save();
         return "işlem başarılı";
@@ -150,7 +145,24 @@ class AdminCategoryController extends Controller
 
     public function branch()
     {
-        $branches=Branch::get();
-        return view('back.pages.category.branch',compact('branches'));
+        $branches = Branch::get();
+        return view('back.pages.category.branch', compact('branches'));
+    }
+
+    public function delete($id)
+    {
+
+        $search = Product::where('category_id', $id)->get();
+
+        if (count($search) > 0) {
+            return "Silme işleminin yapılabilmesi için ürünlerin silinmelidir.";
+        } else {
+
+            $deletebranchGroupLang = CategoryLang::where('category_id', $id);
+            $deletebranchGroupLang->delete();
+            $deletebranchGroup = Category::findOrFail($id);
+            $deletebranchGroup->delete();
+            return "Silme işlemi başarı ile gerçekleşti";
+        }
     }
 }

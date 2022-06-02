@@ -24,7 +24,7 @@ class AdminCategoryRequest extends FormRequest
     public function rules()
     {
 
-          
+
         $rules = [
             'branch_id' => ['required'],
             'image' => ['image', 'max:1024', 'mimes:png,jpg,jpeg'],
@@ -33,9 +33,8 @@ class AdminCategoryRequest extends FormRequest
 
         if (!isset($this->request->all()["id"])) {
 
-            
+
             $rules['image'] = ['required'];
-        
         }
 
 

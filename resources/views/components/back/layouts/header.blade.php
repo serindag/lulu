@@ -50,13 +50,14 @@
                             <div class="menu-content d-flex align-items-center px-3">
                                 <!--begin::Avatar-->
                                 <div class="symbol symbol-50px me-5"><img alt="Avatar"
-                                        src="https://ui-avatars.com/api/?name={{ Auth::guard('admin')->user()->name }}&amp;background=random"></div>
+                                        src="https://ui-avatars.com/api/?name={{ Auth::guard('admin')->user()->name }}&amp;background=random">
+                                </div>
                                 <!--end::Avatar-->
                                 <!--begin::Username-->
                                 <div class="d-flex flex-column">
                                     <div class="fw-bolder d-flex align-items-center fs-5">
                                         {{ Auth::guard('admin')->user()->name }}
-                                        </div><a href="mailto:{{ Auth::guard('admin')->user()->email }}"
+                                    </div><a href="mailto:{{ Auth::guard('admin')->user()->email }}"
                                         class="fw-bold text-muted text-hover-primary fs-7">{{ Auth::guard('admin')->user()->email }}</a>
                                 </div>
                                 <!--end::Username-->

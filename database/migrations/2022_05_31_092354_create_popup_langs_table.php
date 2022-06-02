@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('popup_id');
             $table->integer('lang_id');
             $table->longText('translate');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

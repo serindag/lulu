@@ -19,8 +19,7 @@ class Admin
     {
 
 
-        if(!Auth::guard('admin')->check())
-        {
+        if (!Auth::guard('admin')->check()) {
             return redirect()->route('admin.login.singIn');
         }
         return $next($request);

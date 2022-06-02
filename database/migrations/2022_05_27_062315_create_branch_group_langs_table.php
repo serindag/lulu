@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer('branchGroup_id');
             $table->integer('lang_id');
             $table->string('translate');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

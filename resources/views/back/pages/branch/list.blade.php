@@ -1,25 +1,27 @@
 <x-back.master>
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
 
     @push('css')
         <link rel="stylesheet" href="sweetalert2.min.css">
         <style>
-            .status:hover
-               {
-                   cursor: pointer;
-               }
+            .status:hover {
+                cursor: pointer;
+            }
 
-               .button {
-                   border: 1px solid #2996cc;
-                   padding: 4px;
-                   border-radius: 5px;
+            .button {
+                border: 1px solid #2996cc;
+                padding: 4px;
+                border-radius: 5px;
 
-               }
+            }
 
-               .edit>i {
-                   color: #2996cc
-               }
-       </style>
+            .edit>i {
+                color: #2996cc
+            }
+
+        </style>
     @endpush
 
     <div class="mb-4 mt-5">
@@ -33,7 +35,7 @@
         <thead>
             <tr>
                 <th width="50%">Şube Adı</th>
-                <th >Şehir</th>
+                <th>Şehir</th>
                 <th width="20%">Telefon</th>
                 <th width="20%">Durum</th>
                 <th>İşlemler</th>
@@ -42,40 +44,38 @@
         </thead>
         <tbody>
             @foreach ($branchs as $branch)
+                <tr>
+                    <td width="50%">{{ $branch->name }}</td>
+                    <td>{{ $branch->city }}</td>
+                    <td>{{ $branch->telephone }}</td>
+                    <td>
+                        <span>
+                            <a branch-id="{{ $branch->id }}" status-id="{{ $branch->status }}"
+                                class="button status">
+                                @if ($branch->status > 0)
+                                    Aktif
+                                @else
+                                    Pasif
+                                @endif
+                            </a>
+                        </span>
+                    </td>
+                    <td>
 
-                    <tr>
-                        <td width="50%">{{ $branch->name }}</td>
-                        <td >{{ $branch->city }}</td>
-                        <td >{{ $branch->telephone }}</td>
-                        <td>
-                            <span  >
-                                <a branch-id="{{ $branch->id }}" status-id="{{ $branch->status }}"  class="button status">
-                                    @if($branch->status>0)
-                                Aktif
-                             @else
-                                 Pasif
-                             @endif
-                                </a>
-                            </span>
-                        </td>
-                        <td>
+                        <span>
+                            <a href="{{ route('admin.branch.saveform', $branch->id) }}" class="button"><i
+                                    class="fa-solid fa-pen-to-square"></i></a>
+                        </span>
 
-                            <span >
-                                <a href="{{ route('admin.branch.saveform', $branch->id) }}" class="button"><i
-                                        class="fa-solid fa-pen-to-square"></i></a>
-                            </span>
-                            
-                            <span >
-                                <a  class="button deletebutton"><i
-                                        class="fa-solid fa-trash-can "></i></a>
-                            </span>
-                            
+                        <span>
+                            <a class="button deletebutton"><i class="fa-solid fa-trash-can "></i></a>
+                        </span>
 
-                            
 
-                        </td>
-                    </tr>
 
+
+                    </td>
+                </tr>
             @endforeach
 
 
@@ -87,8 +87,8 @@
     @push('newedit')
         <div class="d-flex align-items-center py-1">
             <!--begin::Button-->
-            <a href="{{ route('admin.branch.saveform') }}" class="btn btn-sm btn-primary"><i
-                    class="fa-solid fa-plus"></i> Yeni Ekle</a>
+            <a href="{{ route('admin.branch.saveform') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i>
+                Yeni Ekle</a>
             <!--end::Button-->
         </div>
     @endpush
@@ -104,81 +104,57 @@
                 $('.example').DataTable();
             });
         </script>
+
         <script>
             $(".deletebutton").click(function() {
-                $.get("{{ isset($branch) ? route('admin.branch.delete', $branch->id) : '' }}",
-                    function(data, status) {
 
-                        const swalWithBootstrapButtons = Swal.mixin({
-                            customClass: {
-                                confirmButton: 'btn btn-success',
-                                cancelButton: 'btn btn-danger'
-                            },
-                            buttonsStyling: false
-                        })
 
-                        swalWithBootstrapButtons.fire({
-                            title: 'Silinsin mi',
-                            text: "Veri Kalıcı olarak silinecektir.",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: 'Evet, Sil',
-                            cancelButtonText: 'İptal',
-                            reverseButtons: true
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                swalWithBootstrapButtons.fire(
-                                    'Silindi!',
-                                    'Veri sildindi',
-                                    'success'
-                                );
-                                setTimeout(function() {
-                                    location.reload();
-                                }, 2000);
+                if (confirm("Silinsin mi?") == true) {
 
-                            } else if (
-                                /* Read more about handling dismissals below */
-                                result.dismiss === Swal.DismissReason.cancel
-                            ) {
-                                swalWithBootstrapButtons.fire(
-                                    'İptal',
-                                    'Veri silme işlemi iptal edildi.',
-                                    'error'
-                                )
-                            }
-                        })
 
-                    });
+                    $.get("{{ isset($branch) ? route('admin.branch.delete', $branch->id) : '' }}",
+                        function(data, status) {
+                            alert(data);
+                            location.reload();
+
+
+                        });
+
+                } else {
+                    alert('işlem İptal Edildi');
+                }
 
             })
         </script>
 
-    <script>
-        $(".status").click(function(){
 
-            id=$(this)[0].getAttribute('branch-id');
-            status_id=$(this).html();
-            if(status_id.trim()=="Pasif")
-                {
+
+
+        <script>
+            $(".status").click(function() {
+
+                id = $(this)[0].getAttribute('branch-id');
+                status_id = $(this).html();
+                if (status_id.trim() == "Pasif") {
 
                     $(this).html('Aktif');
 
                 }
-                if(status_id.trim()=="Aktif")
-                {
+                if (status_id.trim() == "Aktif") {
 
                     $(this).html("Pasif");
 
                 };
-            $.get("{{ route('admin.branch.status') }}",{id:id},function(data,status){
-                
+                $.get("{{ route('admin.branch.status') }}", {
+                    id: id
+                }, function(data, status) {
 
-                console.log(data);
+
+                    console.log(data);
+                });
+
             });
-
-        });
-
-    </script>
+        </script>
     @endpush
 
 

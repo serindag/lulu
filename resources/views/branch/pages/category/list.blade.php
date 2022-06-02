@@ -1,15 +1,15 @@
 <x-branch.master>
 
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
     @push('css')
         <link rel="stylesheet" href="{{ asset('dist/assets/css/nestable.css') }}">
 
-   
+
 
         <style type="text/css">
-
-            .status:hover
-            {
+            .status:hover {
                 cursor: pointer;
             }
 
@@ -81,8 +81,8 @@
             }
 
             /**
-               * Nestable
-               */
+                   * Nestable
+                   */
 
             .dd {
                 position: relative;
@@ -221,8 +221,8 @@
             }
 
             /**
-               * Nestable Extras
-               */
+                   * Nestable Extras
+                   */
 
             .nestable-lists {
                 display: block;
@@ -270,8 +270,8 @@
             }
 
             /**
-               * Nestable Draggable Handles
-               */
+                   * Nestable Draggable Handles
+                   */
 
             .dd3-content {
                 display: block;
@@ -343,8 +343,8 @@
             }
 
             /**
-               * Socialite
-               */
+                   * Socialite
+                   */
 
             .socialite {
                 display: block;
@@ -375,25 +375,27 @@
 
 
                             <span style="float:right;margin-left:5px">
-                                <a href="" class="button"><i class="fa-solid fa-trash-can "></i></a>
+                                <a class="button deletebutton"><i class="fa-solid fa-trash-can "></i></a>
                             </span>
 
                             <span style="float:right;margin-left:5px">
-                                <a href="{{ route('user.category.saveform', $category->id) }}" class="button"><i class="fa-solid fa-pen-to-square"></i></a>
+                                <a href="{{ route('user.category.saveform', $category->id) }}"
+                                    class="button"><i class="fa-solid fa-pen-to-square"></i></a>
                             </span>
                             <span style="float:right;margin-left:5px">
-                                <a href="{{ route('user.product.list', $category->id) }}" class="button"><i class="fa-solid fa-martini-glass"></i></a>
+                                <a href="{{ route('user.product.list', $category->id) }}" class="button"><i
+                                        class="fa-solid fa-martini-glass"></i></a>
                             </span>
 
-                            <span  style="float:right;margin-left:5px">
-                                <a  category-id="{{ $category->id }}" class="button status">
-                            @if($category->status>0)
-                               Aktif
-                            @else
-                                Pasif
-                            @endif
-                            </a>
-                        </span>
+                            <span style="float:right;margin-left:5px">
+                                <a category-id="{{ $category->id }}" class="button status">
+                                    @if ($category->status > 0)
+                                        Aktif
+                                    @else
+                                        Pasif
+                                    @endif
+                                </a>
+                            </span>
 
 
 
@@ -413,22 +415,22 @@
                                             </span>
 
                                             <span style="float:right;margin-left:5px">
-                                                <a href="{{ route('user.category.saveform', $child->id) }}" class="button"><i
-                                                        class="fa-solid fa-pen-to-square"></i></a>
+                                                <a href="{{ route('user.category.saveform', $child->id) }}"
+                                                    class="button"><i class="fa-solid fa-pen-to-square"></i></a>
                                             </span>
                                             <span style="float:right;margin-left:5px">
-                                                <a href="{{ route('user.product.list', $child->id) }}" class="button"><i
-                                                        class="fa-solid fa-martini-glass"></i></a>
+                                                <a href="{{ route('user.product.list', $child->id) }}"
+                                                    class="button"><i class="fa-solid fa-martini-glass"></i></a>
                                             </span>
 
 
-                                            <span   style="float:right;margin-left:5px">
+                                            <span style="float:right;margin-left:5px">
                                                 <a category-id="{{ $child->id }}" class="button status">
-                                                    @if($child->status>0)
-                                                    Aktif
-                                                 @else
-                                                     Pasif
-                                                 @endif
+                                                    @if ($child->status > 0)
+                                                        Aktif
+                                                    @else
+                                                        Pasif
+                                                    @endif
 
                                                 </a>
                                             </span>
@@ -456,20 +458,22 @@
                                                             class="fa-solid fa-trash-can "></i></a>
                                                 </span>
                                                 <span style="float:right;margin-left:5px">
-                                                    <a href="{{ route('user.category.saveform', $subchild->id) }}" class="button"><i
+                                                    <a href="{{ route('user.category.saveform', $subchild->id) }}"
+                                                        class="button"><i
                                                             class="fa-solid fa-pen-to-square"></i></a>
                                                 </span>
                                                 <span style="float:right;margin-left:5px">
-                                                    <a href="{{ route('user.product.list', $subchild->id) }}" class="button"><i
+                                                    <a href="{{ route('user.product.list', $subchild->id) }}"
+                                                        class="button"><i
                                                             class="fa-solid fa-martini-glass"></i></a>
                                                 </span>
-                                                <span  style="float:right;margin-left:5px">
+                                                <span style="float:right;margin-left:5px">
                                                     <a category-id="{{ $subchild->id }}" class="button status">
-                                                        @if($child->status>0)
-                                                    Aktif
-                                                 @else
-                                                     Pasif
-                                                 @endif
+                                                        @if ($child->status > 0)
+                                                            Aktif
+                                                        @else
+                                                            Pasif
+                                                        @endif
                                                     </a>
                                                 </span>
 
@@ -565,31 +569,49 @@
         <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 
         <script>
-            $(".status").click(function(){
-                id=$(this)[0].getAttribute('category-id');
-                status_id=$(this).html();
-                if(status_id.trim()=="Pasif")
-                {
+            $(".status").click(function() {
+                id = $(this)[0].getAttribute('category-id');
+                status_id = $(this).html();
+                if (status_id.trim() == "Pasif") {
 
                     $(this).html('Aktif');
 
                 }
-                if(status_id.trim()=="Aktif")
-                {
+                if (status_id.trim() == "Aktif") {
 
                     $(this).html("Pasif");
 
                 };
-                $.get("{{ route('user.category.status') }}",{id:id},function(data,status){
+                $.get("{{ route('user.category.status') }}", {
+                    id: id
+                }, function(data, status) {
 
                     console.log(data);
                 });
 
             });
-
-
         </script>
+        <script>
+            $(".deletebutton").click(function() {
 
+
+                if (confirm("Silinsin mi?") == true) {
+
+
+                    $.get("{{ isset($category) ? route('user.category.delete', $category->id) : '' }}",
+                        function(data, status) {
+                            alert(data);
+                            location.reload();
+
+                        });
+
+                } else {
+                    alert('işlem İptal Edildi');
+                }
+
+
+            })
+        </script>
     @endpush
 
     @push('newedit')

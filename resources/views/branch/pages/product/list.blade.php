@@ -1,24 +1,27 @@
 <x-branch.master>
 
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
 
     @push('css')
-    <link rel="stylesheet" href="sweetalert2.min.css">
-    <style>
-         .status:hover
-            {
+        <link rel="stylesheet" href="sweetalert2.min.css">
+        <style>
+            .status:hover {
                 cursor: pointer;
             }
+
             .button {
                 border: 1px solid #2996cc;
                 padding: 4px;
                 border-radius: 5px;
             }
+
             .edit>i {
                 color: #2996cc
             }
-    </style>
 
+        </style>
     @endpush
     <div class="mb-4 mt-5">
         <h5>Grup Yönetimi</h5>
@@ -30,7 +33,7 @@
     <table id="example" class="table table-striped example" style="width:100%">
         <thead>
             <tr>
-                <th >İsim</th>
+                <th>İsim</th>
                 <th>Açıklama</th>
                 <th>Şube</th>
                 <th>Kategori</th>
@@ -41,38 +44,43 @@
         </thead>
         <tbody>
             @foreach ($products as $product)
-
-                    <tr>
-                        <td > {{$product->name}} </td>
-                        <td > {!!Str::limit($product->description,50,'...')!!} </td>
-                        <td >@isset($product->branch->name) {{$product->branch->name}} @endisset</td>
-                        <td >@isset($product->category->name) {{$product->category->name}} @endisset</td>
-                        <td>
-                            <span >
-                                <a product-id="{{ $product->id }}" class="button status">
-                                    @if($product->status>0)
-                                Aktif
-                             @else
-                                 Pasif
-                             @endif
-                                </a>
-                            </span>
+                <tr>
+                    <td> {{ $product->name }} </td>
+                    <td> {!! Str::limit($product->description, 50, '...') !!} </td>
+                    <td>
+                        @isset($product->branch->name)
+                            {{ $product->branch->name }}
+                        @endisset
                     </td>
-                        <td>
-                            <span >
-                                <a href="{{ route('user.product.saveform', $product->id) }}" class="button"><i
-                                        class="fa-solid fa-pen-to-square"></i></a>
-                            </span>
-                            <span >
-                                <a  class="button deletebutton"><i
-                                        class="fa-solid fa-trash-can "></i></a>
-                            </span>
+                    <td>
+                        @isset($product->category->name)
+                            {{ $product->category->name }}
+                        @endisset
+                    </td>
+                    <td>
+                        <span>
+                            <a product-id="{{ $product->id }}" class="button status">
+                                @if ($product->status > 0)
+                                    Aktif
+                                @else
+                                    Pasif
+                                @endif
+                            </a>
+                        </span>
+                    </td>
+                    <td>
+                        <span>
+                            <a href="{{ route('user.product.saveform', $product->id) }}" class="button"><i
+                                    class="fa-solid fa-pen-to-square"></i></a>
+                        </span>
+                        <span>
+                            <a class="button deletebutton"><i class="fa-solid fa-trash-can "></i></a>
+                        </span>
 
 
-                        </td>
+                    </td>
 
-                    </tr>
-
+                </tr>
             @endforeach
 
 
@@ -87,8 +95,8 @@
     @push('newedit')
         <div class="d-flex align-items-center py-1">
             <!--begin::Button-->
-            <a href="{{route('user.product.saveform')}}" class="btn btn-sm btn-primary"><i
-                    class="fa-solid fa-plus"></i> Yeni Ekle</a>
+            <a href="{{ route('user.product.saveform') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i>
+                Yeni Ekle</a>
             <!--end::Button-->
         </div>
     @endpush
@@ -104,61 +112,44 @@
                 $('.example').DataTable();
             });
         </script>
+
+
         <script>
             $(".deletebutton").click(function() {
-                $.get("{{ isset($product) ? route('user.product.delete', $product->id) : '' }}",
-                    function(data, status) {
-                        const swalWithBootstrapButtons = Swal.mixin({
-                            customClass: {
-                                confirmButton: 'btn btn-success',
-                                cancelButton: 'btn btn-danger'
-                            },
-                            buttonsStyling: false
-                        })
-                        swalWithBootstrapButtons.fire({
-                            title: 'Silinsin mi',
-                            text: "Veri Kalıcı olarak silinecektir.",
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonText: 'Evet, Sil',
-                            cancelButtonText: 'İptal',
-                            reverseButtons: true
-                        }).then((result) => {
-                            if (result.isConfirmed) {
-                                swalWithBootstrapButtons.fire(
-                                    'Silindi!',
-                                    'Veri sildindi',
-                                    'success'
-                                );
-                                location.reload();
 
-                            } else if (
-                                /* Read more about handling dismissals below */
-                                result.dismiss === Swal.DismissReason.cancel
-                            ) {
-                                swalWithBootstrapButtons.fire(
-                                    'İptal',
-                                    'Veri silme işlemi iptal edildi.',
-                                    'error'
-                                )
-                            }
-                        })
-                    });
+
+                if (confirm("Silinsin mi?") == true) {
+
+
+                    $.get("{{ isset($product) ? route('user.product.delete', $product->id) : '' }}",
+                        function(data, status) {
+                            alert(data);
+                            location.reload();
+
+
+                        });
+
+                } else {
+                    alert('işlem İptal Edildi');
+                }
+
             })
         </script>
+
+
         <script>
-            $(".status").click(function(){
-                id=$(this)[0].getAttribute('product-id');
-                status_id=$(this).html();
-                if(status_id.trim()=="Pasif")
-                {
+            $(".status").click(function() {
+                id = $(this)[0].getAttribute('product-id');
+                status_id = $(this).html();
+                if (status_id.trim() == "Pasif") {
                     $(this).html('Aktif');
                 }
-                if(status_id.trim()=="Aktif")
-                {
+                if (status_id.trim() == "Aktif") {
                     $(this).html("Pasif");
                 };
-                $.get("{{ route('user.product.status') }}",{id:id},function(data,status){
+                $.get("{{ route('user.product.status') }}", {
+                    id: id
+                }, function(data, status) {
                     console.log(data);
                 });
             });

@@ -1,11 +1,14 @@
 <x-branch.master>
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
     @push('css')
-    <style>
-        .tox.tox-tinymce.tox-tinymce--toolbar-sticky-off {
+        <style>
+            .tox.tox-tinymce.tox-tinymce--toolbar-sticky-off {
                 height: 300px !important;
-        }
-    </style>
+            }
+
+        </style>
     @endpush
 
     @if ($errors->any())
@@ -32,9 +35,8 @@
             <p>
                 Bu bölümde yapılan açılır modalı düzenleyebilirsiniz.
             </p>
-
         @endif
-        
+
     </div>
 
 
@@ -49,10 +51,10 @@
         @endforeach
     </ul>
 
-    <form action="{{route('user.popup.save')}}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('user.popup.save') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
-        @if($popupLangs!=null)
+        @if ($popupLangs != null)
             <input type="hidden" name="popup_id" value="{{ $popupLangs[0]->popup_id }}">
         @endif
 
@@ -63,15 +65,13 @@
                     id="panel-{{ $lang->name }}" role="tabpanel">
 
                     @if ($popupLangs == null)
-                    
                         <div class="mb-4">
                             <label class="form-label">Popup içeriği:</label>
-                                <textarea class="open-source-plugins" name="names[{{ $lang->id }}]"></textarea>
+                            <textarea class="open-source-plugins" name="names[{{ $lang->id }}]"></textarea>
                         </div>
                     @else
                         @foreach ($popupLangs as $popupLang)
                             @if ($popupLang->lang_id == $lang->id)
-                                
                                 <div class="mb-4">
                                     <label class="form-label">Popup içeriği:</label>
                                     <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{!! $popupLang->translate !!}</textarea>
@@ -82,7 +82,7 @@
                                     <div class="mb-4">
                                         <label class="form-label">Grup Adı:</label>
                                         <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{{ old('description') }}</textarea>
-                                       
+
                                         <input type="hidden" name="id[]" value="{{ $popupLang->id }}">
                                     </div>
                                 @endif
@@ -91,19 +91,17 @@
                     @endif
 
                 </div>
-
-
             @endforeach
 
-            
+
             <div class="mb-4">
                 <label class="form-label">Görünlecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
                     <option value="">Kategori Seçiniz</option>
-                    @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
                     @endforeach
-                    
+
                 </select>
             </div>
             <div class="mb-4">

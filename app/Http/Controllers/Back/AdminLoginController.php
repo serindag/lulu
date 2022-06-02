@@ -16,15 +16,11 @@ class AdminLoginController extends Controller
 
     public function login(LoginRequest $request)
     {
-       if(Auth::guard('admin')->attempt(['email'=>$request->email,'password'=>$request->password]))
-       {
-        return redirect()->route('admin.dashboard');
-       }
-       else 
-       {
-        return redirect()->route('admin.login.singIn')->withErrors('Lütfen giriş yapınız');
-       }
-
+        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
+            return redirect()->route('admin.dashboard');
+        } else {
+            return redirect()->route('admin.login.singIn')->withErrors('Lütfen giriş yapınız');
+        }
     }
 
     public function destroy(Request $request)
