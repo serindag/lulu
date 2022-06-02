@@ -43,7 +43,7 @@ class PopupRequest extends FormRequest
             'date_start.after'=>'Lütfen Güncel Bir Tarih Seçiniz',
             'date_end.required'=>'Lütfen Bitiş Tarihini Boş Bırakmayınız',
             'date_end.date'=>'Lütfen Tarih Giriniz',
-            'date_end'=>'Lütfen Başlangıç Tarihinden sonraki bir tarih giriniz'
+            'date_end.after'=>'Lütfen Başlangıç Tarihinden sonraki bir tarih giriniz'
 
         ];
     }

@@ -131,22 +131,32 @@ class ProductController extends Controller
             
             for($i=0;$i<count($langs)-1;$i++) {
               
-                if (!is_null($name)) {
-                   
-                 
-                    $productLang1 = ProductLang::where('product_id',$request->product_id)->get();
-                    $productLang = ProductLang::findOrFail($productLang1[$i]->id);
                 
-                    $productLang->translate_name=$name[$langs[$i]->id];
-                    $productLang->translate_description=$description[$langs[$i]->id];
-                    $productLang->save();
+
+                    if (!is_null($name)) {
                     
+                    
+                        $productLang1 = ProductLang::where('product_id',$request->product_id)->get();
+                        if(isset($productLang1[$i]->id))
+                {
+                   
+                        $productLang = ProductLang::findOrFail($productLang1[$i]->id);
+                    
+                        $productLang->translate_name=$name[$langs[$i]->id];
+                        $productLang->translate_description=$description[$langs[$i]->id];
+                        $productLang->save();
+                        
                 }
+                    }
+
+               
 
             }
+            
 
             
-           
+            if(isset($name[$langs[$i]->id]))
+            {
           
                 $lang = Lang::where('name', 'Türkçe')->first();
                     if ($lang->name == 'Türkçe') {
@@ -164,6 +174,7 @@ class ProductController extends Controller
                         }
                         $products->save();
                     }
+            }
 
         }
         return redirect()->route('user.category.list');

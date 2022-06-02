@@ -45,7 +45,7 @@
                         <div class="mb-4">
                             <label class="form-label">Kategori Adı:</label>
                             <input type="text" name="names[{{ $lang->id }}]" value="{{ old('name') }}"
-                                class="form-control" placeholder="Grup Adı">
+                                class="form-control" placeholder="Kategori Adı">
 
                         </div>
                     @else

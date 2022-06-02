@@ -29,12 +29,11 @@ class CategoryRequest extends FormRequest
 
         ];
 
-        if (isset($this->request->all()["id"])) {
-           
-            $id = $this->request->all()["id"];
-            if (!is_null($id)) {
+        if (!isset($this->request->all()["id"])) {
+
+            
                 $rules['image'] = ['required'];
-            }
+            
         }
 
 

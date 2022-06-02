@@ -31,12 +31,11 @@ class AdminCategoryRequest extends FormRequest
 
         ];
 
-        if (isset($this->request->all()["id"])) {
-           
-            $id = $this->request->all()["id"];
-            if (!is_null($id)) {
-                $rules['image'] = ['required'];
-            }
+        if (!isset($this->request->all()["id"])) {
+
+            
+            $rules['image'] = ['required'];
+        
         }
 
 
@@ -45,7 +44,7 @@ class AdminCategoryRequest extends FormRequest
     public function messages()
     {
         return [
-            'branch_id.required' => 'Lürfen Şube Seçiniz',
+            'branch_id.required' => 'Lütfen Şube Seçiniz',
             'image.image' => 'Lütfen resim dosyası giriniz.',
             'image.required' => 'Resim Boş Geçilemez',
             'image.max' => '1 MB den büyük resim yüklenemez',
