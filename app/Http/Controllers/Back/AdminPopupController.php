@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\AdminPopupRequest;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Lang;
@@ -52,7 +53,7 @@ class AdminPopupController extends Controller
         
     }
 
-    public function save(Request $request)
+    public function save(AdminPopupRequest $request)
     {
         if($request->names[1]==null)
         {

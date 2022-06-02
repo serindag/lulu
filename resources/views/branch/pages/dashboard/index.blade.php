@@ -58,15 +58,7 @@
                         <div class="bg-cover light"></div>
                     </a>
                 </div>
-                <div class="col-md-3 menu-style by-3">
-                    <a href="admin/user_infos">
-                        <div class="text-center mb-3" ><i style="font-size: 50px" class="fa-solid fa-file-export"></i>
-                        </div>
-                        <h3 class="text-center">Dışa Aktar</h3>
-                        <p class="text-center">Buradan veri tabanının yedeğini alabilirsiniz.</p>
-                        <div class="bg-cover light"></div>
-                    </a>
-                </div>
+                
                 <div class="col-md-3 menu-style by-3">
                     <a href="{{route('user.logout')}}">
                         <div class="text-center mb-3" ><i style="font-size: 50px" class="fa-solid fa-right-from-bracket"></i>

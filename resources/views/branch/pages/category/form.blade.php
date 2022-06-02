@@ -1,6 +1,20 @@
 <x-branch.master>
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
 
+    @if ($errors->any())
+        <div class="alert alert-danger mt-5">
+
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+
+
+        </div>
+    @endif
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 
         @foreach ($langs as $lang)
@@ -62,11 +76,12 @@
             @endforeach
 
         </div>
-        
-        
+
+
         <div class="row mb-2">
             <label for="">Kategori Resmi</label>
-            <img style="width: 200px" src="@isset($category->image) {{asset($category->image)}} @endisset" alt="" class="img-thumbnail rounded img-fluid" >
+            <img style="width: 200px" src="@isset($category->image) {{ asset($category->image) }} @endisset"
+                alt="" class="img-thumbnail rounded img-fluid">
             <input type="file" name="image">
         </div>
 

@@ -26,6 +26,8 @@ class UserRequest extends FormRequest
     public function rules()
     {
          $password= $this->request->all()["newPassword"];
+        
+       
 
             $rules=[
                 'name' => ['required','min:2','max:80'],
@@ -38,7 +40,6 @@ class UserRequest extends FormRequest
             if(!is_null($password))
             {
                 $rules['newPassword'] = ['regex:/[a-z]/','regex:/[A-Z]/','regex:/[0-9]/','regex:/[@$!+%*#?&]/','min:8'];
-
             }
 
 

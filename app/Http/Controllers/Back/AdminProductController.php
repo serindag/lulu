@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\AdminProductRequest;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Lang;
@@ -61,8 +62,19 @@ class AdminProductController extends Controller
     }
 
 
-    public function save(Request $request)
+    public function save(AdminProductRequest $request)
     {
+
+        if($request->names[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe başlık boş bırakılamaz');
+        }
+
+        if($request->descriptions[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe açıklama boş bırakılamaz');
+        }
+
         $langs=Lang::get();
         $name=$request->names;
         $description=$request->descriptions;
@@ -143,7 +155,7 @@ class AdminProductController extends Controller
                     }
 
         }
-        return redirect()->route('admin.category.list');
+        return redirect()->route('admin.category.branch');
     }
 
 

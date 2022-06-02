@@ -65,7 +65,7 @@
                     </a>
                 </div>
                 <div class="menu-item">
-                    <a class="menu-link @if((Request::segment(1)=="admin") and  (Request::segment(2)=="category")) active @endif"  href="{{ route('admin.category.list') }}">
+                    <a class="menu-link @if((Request::segment(1)=="admin") and  (Request::segment(2)=="category")) active @endif"  href="{{ route('admin.category.branch') }}">
                         <span class="menu-icon">
                             <!--begin::Svg Icon | path: icons/duotune/layouts/lay010.svg-->
                             <i class="fa-solid fa-database"></i>
@@ -129,36 +129,7 @@
 
 
 
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <!--begin::Svg Icon | path: icons/duotune/communication/com013.svg-->
-                            <i class="fa-solid fa-file-shield"></i>
-                            <!--end::Svg Icon-->
-                        </span>
-                        <span class="menu-title">Data Yönetimi</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    <div class="menu-sub menu-sub-accordion menu-active-bg">
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Dışa Aktarma Sihirbazı</span>
-                            </a>
-                        </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="#">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">İçe Aktarma Sihirbazı</span>
-                            </a>
-                        </div>
-
-                    </div>
-                </div>
+                
 
                 <div class="menu-item">
                     <a class="menu-link" href="{{ route('admin.logout') }}">

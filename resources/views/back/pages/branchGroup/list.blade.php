@@ -31,7 +31,8 @@
     <table id="example" class="table table-striped example" style="width:100%">
         <thead>
             <tr>
-                <th width="85%">İsim</th>
+                <th width="80%">İsim</th>
+                <th>Durum</th>
                 <th>İşlemler</th>
 
             </tr>
@@ -40,18 +41,9 @@
             @foreach ($branchGroups as $branchGroup)
 
                     <tr>
-                        <td width="85%">{{ $branchGroup->name }}</td>
+                        <td >{{ $branchGroup->name }}</td>
                         <td>
-                            <span style="float:right;margin-left:5px">
-                                <a  class="button deletebutton"><i
-                                        class="fa-solid fa-trash-can "></i></a>
-                            </span>
-                            <span style="float:right;margin-left:5px">
-                                <a href="{{ route('admin.branchGroup.saveform', $branchGroup->id) }}" class="button"><i
-                                        class="fa-solid fa-pen-to-square"></i></a>
-                            </span>
-
-                            <span  style="float:right;margin-left:5px">
+                            <span>
                                 <a group-id="{{ $branchGroup->id }}" class="button status">
                                     @if($branchGroup->status>0)
                                 Aktif
@@ -59,6 +51,16 @@
                                  Pasif
                              @endif
                                 </a>
+                            </span>
+                        </td>
+                        <td>
+                            <span>
+                                <a href="{{ route('admin.branchGroup.saveform', $branchGroup->id) }}" class="button"><i
+                                        class="fa-solid fa-pen-to-square"></i></a>
+                            </span>
+                            <span>
+                                <a  class="button deletebutton"><i
+                                        class="fa-solid fa-trash-can "></i></a>
                             </span>
 
 

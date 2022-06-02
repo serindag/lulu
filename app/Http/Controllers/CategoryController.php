@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Branch\CategoryRequest;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\CategoryLang;
@@ -68,8 +69,13 @@ class CategoryController extends Controller
         return view('branch.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs','category'));
     }
 
-    public function save(Request $request)
+    public function save(CategoryRequest $request)
     {
+        if($request->names[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
+        }
+        
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
 

@@ -7,6 +7,18 @@
         }
     </style>
     @endpush
+    @if ($errors->any())
+        <div class="alert alert-danger mt-5">
+
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+
+
+        </div>
+    @endif
 
 
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
@@ -90,7 +102,7 @@
             <div class="mb-4">
                 <label class="form-label">Görünlecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
-                   
+                   <option value="">Kategori Seçiniz</option>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach

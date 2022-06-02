@@ -57,11 +57,12 @@
             <select class="selectpicker form-control" name="branch_id" data-live-search="true"
                 title="Select a number">
                 @if ($user != null)
-                    
+                   
                     @if ($branchs->all() == null)
                     
-                        <option value="0">Lütfen grup ekleniniz.</option>
+                        <option value="">Lütfen şube ekleniniz.</option>
                     @else
+                    <option value="">Lütfen şube seçiniz.</option>
                         @foreach ($branchs as $branch)
                             @if ($branch->id == $user->branch_id)
                                 <option selected value="{{ $branch->id }}">{{ $branch->name }}</option>
@@ -72,8 +73,9 @@
                     @endif
                 @else
                     @if ($branchs->all() == null)
-                        <option value="0">Lütfen grup ekleniniz.</option>
+                        <option value="">Lütfen grup ekleniniz.</option>
                     @else
+                    <option value="">Lütfen şube seçiniz.</option>
                         @foreach ($branchs as $branch)
                             <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                         @endforeach

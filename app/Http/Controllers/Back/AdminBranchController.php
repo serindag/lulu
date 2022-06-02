@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\AdminBranchRequest;
 use App\Models\Branch;
 use App\Models\BranchGroup;
 use Illuminate\Http\Request;
@@ -26,8 +27,11 @@ class AdminBranchController extends Controller
         return view('back.pages.branch.form',compact('branchGroups','branchs'));
 
     }
-    public function save(Request $request)
+    public function save(AdminBranchRequest $request)
     {
+       
+        
+
         if ($request->id == null) {
             $branchs=new Branch();
         }

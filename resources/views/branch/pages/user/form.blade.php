@@ -1,5 +1,6 @@
 <x-branch.master>
 
+    
     <form action="{{ route('user.user.save') }}" method="POST">
         @csrf
             @if($errors->any())

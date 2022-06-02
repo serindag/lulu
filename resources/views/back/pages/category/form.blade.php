@@ -1,5 +1,7 @@
 <x-back.master>
-    @push('title') Limonist @endpush
+    @push('title')
+        Limonist
+    @endpush
 
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 
@@ -19,7 +21,18 @@
             <input type="hidden" name="category_id" value="{{ $categoryLangs[0]->category_id }}">
         @endif
 
+        @if ($errors->any())
+            <div class="alert alert-danger mt-5">
 
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li> {{ $error }}</li>
+                    @endforeach
+                </ul>
+
+
+            </div>
+        @endif
 
 
         <div class="tab-content" id="myTabContent">
@@ -68,8 +81,9 @@
             <select name="branch_id" class="form-control" id="">
 
                 @if (count($branchs) == 0)
-                    <option value="0">Lütfen Şube Ekleyiniz</option>
+                    <option value="">Lütfen Şube Ekleyiniz</option>
                 @else
+                <option value="">Lütfen Şube Seçiniz</option>
                     @foreach ($branchs as $branch)
                         <option value="{{ $branch->id }}">{{ $branch->name }}</option>
                     @endforeach
@@ -79,11 +93,12 @@
 
             </select>
         </div>
-        
+
         <div class="row mb-2">
             <label for="">Kategori Resmi</label>
-            <img style="width: 200px" src="@isset($category->image) {{asset($category->image)}} @endisset" alt="" class="img-thumbnail rounded img-fluid" >
-            <input type="file" name="image">
+            <img style="width: 200px" src="@isset($category->image) {{ asset($category->image) }} @endisset"
+                alt="" class="img-thumbnail rounded img-fluid">
+            <input class="form-control" type="file" name="image">
         </div>
 
         <div class="row">

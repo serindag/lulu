@@ -3,18 +3,7 @@
 
     <form action="{{ route('admin.branch.save') }}" method="POST">
         @csrf
-        @if ($errors->any())
-            <div class="alert alert-danger mt-5">
-
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li> {{ $error }}</li>
-                    @endforeach
-                </ul>
-
-
-            </div>
-        @endif
+      
         <!--begin::Input group-->
 
         <div class="mb-4 mt-5">
@@ -32,7 +21,18 @@
             @endif
             
         </div>
+        @if ($errors->any())
+        <div class="alert alert-danger mt-5">
 
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+
+
+        </div>
+    @endif
         
         <div class="mb-4">
             <label class="form-label">Şube Adı:</label>
@@ -48,9 +48,11 @@
             <select class="selectpicker form-control" name="branch_group_id" data-live-search="true"
                 title="Select a number">
                 @if ($branchs != null)
+                    <option value="">Lütfen Grup Seçiniz</option>
                     @if ($branchGroups->all() == null)
-                        <option value="0">Lütfen grup ekleniniz.</option>
+                        <option value="">Lütfen grup ekleniniz.</option>
                     @else
+                    <option value="">Lütfen Grup Seçiniz</option>
                         @foreach ($branchGroups as $group)
                             @if ($group->id == $branchs->branch_group_id)
                                 <option selected value="{{ $group->id }}">{{ $group->name }}</option>
@@ -61,8 +63,9 @@
                     @endif
                 @else
                     @if ($branchGroups->all() == null)
-                        <option value="0">Lütfen grup ekleniniz.</option>
+                        <option value="">Lütfen grup ekleniniz.</option>
                     @else
+                    <option value="">Lütfen Grup Seçiniz</option>
                         @foreach ($branchGroups as $group)
                             <option value="{{ $group->id }}">{{ $group->name }}</option>
                         @endforeach

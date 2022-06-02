@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\AdminCategoryRequest;
 use App\Models\Category;
 use App\Models\CategoryLang;
 use App\Models\SubCategory;
@@ -52,6 +53,8 @@ class AdminCategoryController extends Controller
     }
     public function saveform($id = null)
     {
+        
+
         $categoryLangs = null;
         $category=null;
         $langs = Lang::get();
@@ -65,8 +68,13 @@ class AdminCategoryController extends Controller
         return view('back.pages.category.form', compact('langs', 'langFirst', 'categoryLangs', 'branchs','category'));
     }
 
-    public function save(Request $request)
+    public function save(AdminCategoryRequest $request)
     {
+        if($request->names[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
+        }
+        
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
 
@@ -121,7 +129,7 @@ class AdminCategoryController extends Controller
                 $categories->save();
             }
         }
-        return redirect()->route('admin.category.list');
+        return redirect()->route('admin.category.branch');
     }
 
     public function status(Request $request)

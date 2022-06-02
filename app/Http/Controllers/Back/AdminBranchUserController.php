@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\AdminBranchUserRequest;
 use App\Models\Branch;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,7 +14,8 @@ class AdminBranchUserController extends Controller
     public function list()
     {
         $users =User::get();
-        return view('back.pages.branchUser.list',compact('users'));
+        $branchs=Branch::get();
+        return view('back.pages.branchUser.list',compact('users','branchs'));
     }
 
     public function status(Request $request)
@@ -45,15 +47,35 @@ class AdminBranchUserController extends Controller
 
     }
 
-    public function save(Request $request)
+    public function save(AdminBranchUserRequest $request)
     {
+            
        
         if ($request->id == null) {
+
+            $userControl = User::where('email',$request->email)->first();
+            if($userControl!=null)
+            {
+                return redirect()->back()->withErrors('Bu mail daha önce kayıtlı'); 
+            }
+
             $users=new User();
         }
         else
         {
+            $userControl = User::where('email',$request->email)->first();
             $users=User::findOrFail($request->id);
+            if($userControl!=null)
+            {
+               
+                if($request->email!=$users->email)
+                {
+                    return redirect()->back()->withErrors('Bu mail daha önce kayıtlı');
+                }
+
+                 
+            }
+  
         }
 
         $users->name=$request->name;

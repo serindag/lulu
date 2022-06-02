@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Branch\PopupRequest;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Lang;
@@ -42,9 +43,13 @@ class PopupController extends Controller
         
     }
 
-    public function save(Request $request)
+    public function save(PopupRequest $request)
     {
-        
+        if($request->names[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
+        }
+         
         if ($request->id == null) {
             foreach ($request->names as $key => $name) {
                 if (!is_null($name)) {

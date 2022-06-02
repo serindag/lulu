@@ -8,6 +8,19 @@
     </style>
     @endpush
 
+    @if ($errors->any())
+        <div class="alert alert-danger mt-5">
+
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li> {{ $error }}</li>
+                @endforeach
+            </ul>
+
+
+        </div>
+    @endif
+
     <div class="mb-4 mt-5">
         @if ($popupLangs == null)
             <h5>Popup Ekle</h5>
@@ -80,16 +93,13 @@
                 </div>
 
 
-                
-
-
             @endforeach
 
             
             <div class="mb-4">
                 <label class="form-label">Görünlecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
-                    
+                    <option value="">Kategori Seçiniz</option>
                     @foreach($categories as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
                     @endforeach

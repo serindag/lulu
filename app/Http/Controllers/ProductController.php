@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\Branch\ProductRequest;
 use App\Models\Branch;
 use App\Models\Category;
 use App\Models\Lang;
@@ -72,8 +74,18 @@ class ProductController extends Controller
     }
 
 
-    public function save(Request $request)
+    public function save(ProductRequest $request)
     {
+
+        if($request->names[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe başlık boş bırakılamaz');
+        }
+        if($request->descriptions[1]==null)
+        {
+            return redirect()->back()->withErrors('Türkçe açıklama boş bırakılamaz');
+        }
+ 
         $langs=Lang::get();
         $name=$request->names;
         $description=$request->descriptions;
