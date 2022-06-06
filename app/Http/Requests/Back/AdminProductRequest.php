@@ -28,10 +28,9 @@ class AdminProductRequest extends FormRequest
 
 
         $rules = [
-            'branch_id' => ['required'],
-            'category_id' => ['required'],
+            
             'price' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'image' => ['image', 'max:1024', 'mimes:png,jpg,jpeg'],
+            'image' => ['image', 'max:3072', 'mimes:png,jpg,jpeg'],
 
         ];
         if (!isset($this->request->all()["id"])) {
@@ -43,13 +42,12 @@ class AdminProductRequest extends FormRequest
     public function messages()
     {
         return [
-            'branch_id.required' => 'Lütfen Şube Seçiniz',
-            'category_id.required' => 'Lütfen Kategori Seçiniz',
+           
             'price.required' => 'Fiyat Boş Geçilmez',
             'price.regex' => 'Fiyat Numaralardan Oluşmalıdır.',
             'image.image' => 'Lütfen resim dosyası giriniz.',
             'image.required' => 'Resim Boş Geçilemez',
-            'image.max' => '1 MB den büyük resim yüklenemez',
+            'image.max' => '3 MB den büyük resim yüklenemez',
             'image.mimes' => 'Sadece png,jpg ve jpeg Dosyaları Yüklenebilir',
 
         ];

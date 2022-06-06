@@ -46,7 +46,7 @@
                         <div class="mb-4">
                             <label class="form-label">Kategori Adı:</label>
                             <input type="text" name="names[{{ $lang->id }}]" value="{{ old('name') }}"
-                                class="form-control" placeholder="Grup Adı">
+                                class="form-control" placeholder="Kategori Adı">
 
                         </div>
                     @else
@@ -64,7 +64,7 @@
                                     <div class="mb-4">
                                         <label class="form-label">Kategori Adı:</label>
                                         <input type="text" name="names[{{ $lang->id }}]"
-                                            value="{{ old('name') }}" class="form-control" placeholder="Grup Adı">
+                                            value="{{ old('name') }}" class="form-control" placeholder="Kategori Adı">
                                         <input type="hidden" name="id[]" value="{{ $categoryLang->id }}">
                                     </div>
                                 @endif
@@ -86,14 +86,15 @@
             <input type="file" name="image">
         </div>
 
-        <div class="row">
-            <button type="submit" class="btn btn-success me-2 mb-2">
+        <div class="mb-4">
+            <button type="submit" class="btn btn-light-success">
                 @if ($categoryLangs == null)
                     Kaydet
                 @else
                     Güncelle
                 @endif
             </button>
+            <a href="{{ route('user.popup.list') }}" class="btn btn-light-danger">İptal</a>
         </div>
 
     </form>

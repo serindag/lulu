@@ -27,7 +27,7 @@ class PopupController extends Controller
         $popup = null;
         $langs = Lang::get();
         $langFirst = Lang::orderBy('order', 'asc')->first();
-        $categories = Category::get();
+        $categories = Category::where('branch_id', Auth::user()->branch_id)->get();
         $branches = Branch::get();
 
         if ($id != null) {
@@ -43,60 +43,85 @@ class PopupController extends Controller
 
     public function save(PopupRequest $request)
     {
+       
+
+
         if ($request->names[1] == null) {
-            return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
+            return redirect()->back()->withErrors('Türkçe başlık boş bırakılamaz');
         }
 
+        if ($request->descriptions[1] == null) {
+            return redirect()->back()->withErrors('Türkçe açıklama boş bırakılamaz');
+        }
+
+        $langs = Lang::get();
+        $name = $request->names;
+        $description = $request->descriptions;
+
         if ($request->id == null) {
-            foreach ($request->names as $key => $name) {
-                if (!is_null($name)) {
-                    $lang = Lang::where('id', $key)->first();
-                    if ($lang->name == 'Türkçe') {
+
+
+
+
+            for ($i = 0; $i < count($langs); $i++) {
+                if (!is_null($name[$langs[$i]->id])) {
+                    if ($langs[$i]->name == 'Türkçe') {
                         $popups = new Popup();
-                        $popups->description = $name;
+                        $popups->name = $name[$langs[$i]->id];
+                        $popups->description = $description[$langs[$i]->id];
+                        $popups->branch_id = Auth::user()->branch_id;
+                        $popups->category_id = $request->category_id;
+                        $popups->date_start = $request->date_start;
+                        $popups->date_end = $request->date_end;
+
+                        $popups->save();
+                    }
+                    $lastGroup = Popup::orderBy('id', 'DESC')->first();
+                    $popupLang = new PopupLang();
+                    $popupLang->lang_id = $langs[$i]->id;
+                    $popupLang->popup_id = $lastGroup->id;
+
+                    $popupLang->translate_name = $name[$langs[$i]->id];
+                    $popupLang->translate_description = $description[$langs[$i]->id];
+                    $popupLang->save();
+                }
+            }
+        } else {
+
+
+            for ($i = 0; $i < count($langs) - 1; $i++) {
+
+                if (!is_null($name)) {
+
+
+                    $popupLang1 = PopupLang::where('popup_id', $request->popup_id)->get();
+                    if (isset($popupLang1[$i]->id)) {
+                        $popupLang = PopupLang::findOrFail($popupLang1[$i]->id);
+                        $popupLang->translate_name = $name[$langs[$i]->id];
+                        $popupLang->translate_description = $description[$langs[$i]->id];
+                        $popupLang->save();
+                    }
+                }
+
+
+
+                if (isset($name[$langs[$i]->id])) {
+
+                    $lang = Lang::where('name', 'Türkçe')->first();
+                    if ($lang->name == 'Türkçe') {
+                        $popups = Popup::findOrFail($request->popup_id);
+                        $popups->name = $name[$langs[$i]->id];
+                        $popups->description = $description[$langs[$i]->id];
                         $popups->branch_id = Auth::user()->branch_id;
                         $popups->category_id = $request->category_id;
                         $popups->date_start = $request->date_start;
                         $popups->date_end = $request->date_end;
                         $popups->save();
                     }
-
-                    $lastGroup = Popup::orderBy('id', 'DESC')->first();
-                    $popupLang = new PopupLang();
-                    $popupLang->lang_id = (int)$key;
-                    $popupLang->popup_id = $lastGroup->id;
-                    $popupLang->translate = $name;
-                    $popupLang->save();
                 }
-            }
-        } else {
-
-            $i = 0;
-
-            foreach ($request->names as $name) {
-
-                if (!is_null($name)) {
-
-                    $popupLang = PopupLang::findOrFail($request->id[$i++]);
-                    $popupLang->translate = $name;
-                    $popupLang->save();
-                }
-            }
-
-
-
-            $lang = Lang::where('name', 'Türkçe')->first();
-            if ($lang->name == 'Türkçe') {
-                $popups = Popup::findOrFail($request->popup_id);
-                $popups->description = $request->names[$lang->id];
-                $popups->branch_id = Auth::user()->branch_id;
-                $popups->category_id = $request->category_id;
-                $popups->date_start = $request->date_start;
-                $popups->date_end = $request->date_end;
-                $popups->save();
             }
         }
-        return redirect()->route('user.popup.list');
+        return redirect()->back()->with('success', 'Popup Kaydedildi');
     }
 
     public function status(Request $request)

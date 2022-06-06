@@ -1,5 +1,6 @@
 <x-back.master>
 
+    
     @push('title')
         Limonist
     @endpush
@@ -70,7 +71,7 @@
                     </td>
                     <td>
                         <span>
-                            <a href="{{ route('admin.product.saveform', $product->id) }}" class="button"><i
+                            <a href="{{ route('admin.product.saveform',[$category, $product->id]) }}" class="button"><i
                                     class="fa-solid fa-pen-to-square"></i></a>
                         </span>
                         <span>
@@ -95,7 +96,7 @@
     @push('newedit')
         <div class="d-flex align-items-center py-1">
             <!--begin::Button-->
-            <a href="{{ route('admin.product.saveform') }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i>
+            <a href="{{ route('admin.product.saveform',$category) }}" class="btn btn-sm btn-primary"><i class="fa-solid fa-plus"></i>
                 Yeni Ekle</a>
             <!--end::Button-->
         </div>

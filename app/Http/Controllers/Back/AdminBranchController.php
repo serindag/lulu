@@ -31,7 +31,6 @@ class AdminBranchController extends Controller
     {
 
 
-
         if ($request->id == null) {
             $branchs = new Branch();
         } else {

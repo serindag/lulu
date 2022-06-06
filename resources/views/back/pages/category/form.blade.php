@@ -102,14 +102,17 @@
             <input class="form-control" type="file" name="image">
         </div>
 
-        <div class="row">
-            <button type="submit" class="btn btn-success me-2 mb-2">
+
+
+        <div class="mb-4">
+            <button type="submit" class="btn btn-light-success">
                 @if ($categoryLangs == null)
                     Kaydet
                 @else
                     Güncelle
                 @endif
             </button>
+            <a href="{{ route('admin.popup.list') }}" class="btn btn-light-danger">İptal</a>
         </div>
 
     </form>

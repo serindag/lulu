@@ -27,7 +27,7 @@ class AdminCategoryRequest extends FormRequest
 
         $rules = [
             'branch_id' => ['required'],
-            'image' => ['image', 'max:1024', 'mimes:png,jpg,jpeg'],
+            'image' => ['image', 'max:3072', 'mimes:png,jpg,jpeg'],
 
         ];
 
@@ -46,7 +46,7 @@ class AdminCategoryRequest extends FormRequest
             'branch_id.required' => 'Lütfen Şube Seçiniz',
             'image.image' => 'Lütfen resim dosyası giriniz.',
             'image.required' => 'Resim Boş Geçilemez',
-            'image.max' => '1 MB den büyük resim yüklenemez',
+            'image.max' => '3 MB den büyük resim yüklenemez',
             'image.mimes' => 'Sadece png,jpg ve jpeg Dosyaları Yüklenebilir',
 
 

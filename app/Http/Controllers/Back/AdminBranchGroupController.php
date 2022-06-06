@@ -21,60 +21,28 @@ class AdminBranchGroupController extends Controller
     }
     public function saveForm($id = null)
     {
-        $branchGroupLangs = null;
-        $langs = Lang::get();
-        $langFirst = Lang::orderBy('order', 'asc')->first();
+        $branchGroups=null;
 
         if ($id != null) {
-            $branchGroupLangs = BranchGroupLang::where('branchGroup_id', $id)->get();
+            $branchGroups = BranchGroup::where('id', $id)->first();
         }
-        return view('back.pages.branchGroup.form', compact('langs', 'langFirst', 'branchGroupLangs'));
+
+        return view('back.pages.branchGroup.form', compact('branchGroups'));
     }
 
     public function save(Request $request)
     {
-        if ($request->names[1] == null) {
-            return redirect()->back()->withErrors('Türkçe boş bırakılamaz');
-        }
-
+        
         if ($request->id == null) {
-            foreach ($request->names as $key => $name) {
-                if (!is_null($name)) {
-                    $lang = Lang::where('id', $key)->first();
-                    if ($lang->name == 'Türkçe') {
-                        $branchGroups = new BranchGroup();
-                        $branchGroups->name = $name;
-                        $branchGroups->save();
-                    }
-                    $lastGroup = BranchGroup::orderBy('id', 'DESC')->first();
-                    $branchGroupsLang = new BranchGroupLang();
-                    $branchGroupsLang->lang_id = (int)$key;
-                    $branchGroupsLang->branchGroup_id = $lastGroup->id;
-                    $branchGroupsLang->translate = $name;
-                    $branchGroupsLang->save();
-                }
-            }
+            $branchGroups = new BranchGroup();
         } else {
-
-
-
-            $i = 0;
-            foreach ($request->names as $name) {
-
-                if (!is_null($name)) {
-                    $branchGroupsLang = BranchGroupLang::findOrFail($request->id[$i++]);
-                    $branchGroupsLang->translate = $name;
-                    $branchGroupsLang->save();
-                }
-            }
-            $lang = Lang::where('name', 'Türkçe')->first();
-            if ($lang->name == 'Türkçe') {
-                $branchGroups = BranchGroup::findOrFail($request->branchGroup_id);
-                $branchGroups->name = $request->names[$lang->id];
-                $branchGroups->save();
-            }
+            $branchGroups = BranchGroup::findOrFail($request->id);
         }
-        return redirect()->route('admin.branchGroup.list');
+
+        $branchGroups->name = $request->name;
+        $branchGroups->save();
+       
+        return redirect()->back()->with('success', 'Popup Kaydedildi');
     }
 
 

@@ -31,7 +31,7 @@ class AdminBranchRequest extends FormRequest
             'telephone' => ['required', 'numeric'],
             'fax' => ['required', 'numeric'],
             'email' => ['required', 'email'],
-            'service_start' => ['required', 'after:now'],
+            'service_start' => ['required', ],
             'service_end' => ['required', 'after:service_start'],
 
         ];
@@ -56,9 +56,9 @@ class AdminBranchRequest extends FormRequest
             'email.required' => 'E mail Boş Geçilmez',
             'email.email' => 'Lürfen Email Adresini Doğru Giriniz.',
             'service_start.required' => 'Lütfen Başlangıç Tarihini Boş Bırakmayınız',
-            'service_start.after' => 'Lütfen Güncel Bir Tarih Seçiniz',
+          
             'service_end.required' => 'Lütfen Bitiş Tarihini Boş Bırakmayınız',
-            'service_end' => 'Lütfen Başlangıç Tarihinden sonraki bir tarih giriniz',
+            'service_end.after' => 'Lütfen Başlangıç Tarihinden sonraki bir tarih giriniz',
 
         ];
     }

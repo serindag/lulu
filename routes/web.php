@@ -78,7 +78,7 @@ Route::middleware('auth')->prefix('user')->name('user.')->group(function () {
     Route::prefix('product')->name('product.')->group(function () {
 
         Route::get('/status', [ProductController::class, 'status'])->name('status');
-        Route::get('/new/{id?}', [ProductController::class, 'saveform'])->name('saveform');
+        Route::get('/new/{category?}/{id?}', [ProductController::class, 'saveform'])->name('saveform');
         Route::post('/new', [ProductController::class, 'save'])->name('save');
         Route::get('/delete/{id}', [ProductController::class, 'delete'])->name('delete');
         Route::get('/{id?}', [ProductController::class, 'list'])->name('list');
@@ -173,7 +173,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::prefix('product')->name('product.')->group(function () {
 
         Route::get('/status', [AdminProductController::class, 'status'])->name('status');
-        Route::get('/new/{id?}', [AdminProductController::class, 'saveform'])->name('saveform');
+        Route::get('/new/{category?}/{id?}', [AdminProductController::class, 'saveform'])->name('saveform');
         Route::post('/new', [AdminProductController::class, 'save'])->name('save');
         Route::get('/delete/{id}', [AdminProductController::class, 'delete'])->name('delete');
         Route::get('/{id?}', [AdminProductController::class, 'list'])->name('list');

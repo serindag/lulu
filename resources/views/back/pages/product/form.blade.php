@@ -23,6 +23,16 @@
         </div>
     @endif
 
+    @if (\Session::has('success'))
+            <div class="alert alert-success">
+                <ul>
+                    <li>{!! \Session::get('success') !!}</li>
+                </ul>
+            </div>
+        @endif
+
+    
+
     <ul class="nav nav-tabs nav-line-tabs mb-5 fs-6">
 
         @foreach ($langs as $lang)
@@ -38,6 +48,9 @@
 
         @if ($productLangs != null)
             <input type="hidden" name="product_id" value="{{ $productLangs[0]->product_id }}">
+
+            
+
         @endif
 
         <div class="tab-content" id="myTabContent">
@@ -94,27 +107,8 @@
                 </div>
             @endforeach
 
-            <div class="mb-4">
-                <label class="form-label">Şube:</label>
-                <select name="branch_id" id="" class="form-control">
-                    <option value="">Şube Seçiniz</option>
-                    @foreach ($branches as $branch)
-                        <option value="{{ $branch->id }}">{{ $branch->name }}</option>
-                    @endforeach
-
-
-                </select>
-            </div>
-            <div class="mb-4">
-                <label class="form-label">Görünlecek Yer:</label>
-                <select name="category_id" id="" class="form-control">
-                    <option value="">Kategori Seçiniz</option>
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->name }}</option>
-                    @endforeach
-
-                </select>
-            </div>
+           
+           
             <div class="mb-4">
                 <label class="form-label">Fiyat:</label>
                 <input type="text" class="form-control" name="price"
@@ -126,18 +120,24 @@
                     src="@isset($product->image) {{ asset($product->image) }} @endisset" alt=""
                     class="img-thumbnail rounded img-fluid">
                 <input type="file" class="form-control" name="image" value="">
+                <input type="hidden" name="category" value="{{ $category }}">
             </div>
 
         </div>
-        <div class="row">
-            <button type="submit" class="btn btn-success me-2 mb-2">
+
+        <div class="mb-4">
+            <button type="submit" class="btn btn-light-success">
                 @if ($productLangs == null)
                     Kaydet
                 @else
                     Güncelle
                 @endif
             </button>
+            <a href="{{ route('user.popup.list') }}" class="btn btn-light-danger">İptal</a>
         </div>
+
+
+
 
     </form>
 

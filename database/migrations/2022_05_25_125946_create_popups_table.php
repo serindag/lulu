@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('popups', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->longText('description');
             $table->integer('status')->default(0);
             $table->integer('branch_id');

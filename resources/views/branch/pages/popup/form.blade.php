@@ -24,6 +24,14 @@
         </div>
     @endif
 
+    @if (\Session::has('success'))
+        <div class="alert alert-success">
+            <ul>
+                <li>{!! \Session::get('success') !!}</li>
+            </ul>
+        </div>
+    @endif
+
     <div class="mb-4 mt-5">
         @if ($popupLangs == null)
             <h5>Popup Ekle</h5>
@@ -66,22 +74,41 @@
 
                     @if ($popupLangs == null)
                         <div class="mb-4">
+                            <label class="form-label">Popup Adı:</label>
+                            <input type="text" name="names[{{ $lang->id }}]" class="form-control" />
+
+                        </div>
+
+                        <div class="mb-4">
                             <label class="form-label">Popup içeriği:</label>
-                            <textarea class="open-source-plugins" name="names[{{ $lang->id }}]"></textarea>
+                            <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]"></textarea>
                         </div>
                     @else
                         @foreach ($popupLangs as $popupLang)
                             @if ($popupLang->lang_id == $lang->id)
                                 <div class="mb-4">
+                                    <label class="form-label">Popup Adı:</label>
+                                    <input type="text" name="names[{{ $lang->id }}]" class="form-control" />
+
+                                </div>
+
+                                <div class="mb-4">
                                     <label class="form-label">Popup içeriği:</label>
-                                    <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{!! $popupLang->translate !!}</textarea>
+                                    <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]">{!! $popupLang->translate !!}</textarea>
                                     <input type="hidden" name="id[]" value="{{ $popupLang->id }}">
                                 </div>
                             @else
                                 @if (count($langs) != count($popupLangs))
+                                <div class="mb-4">
+                                    <label class="form-label">Popup Adı:</label>
+                                    <input type="text" name="names[{{ $lang->id }}]" class="form-control" />
+
+                                </div>
+
+
                                     <div class="mb-4">
-                                        <label class="form-label">Grup Adı:</label>
-                                        <textarea class="open-source-plugins" name="names[{{ $lang->id }}]">{{ old('description') }}</textarea>
+                                        <label class="form-label">Popup içeriği:</label>
+                                        <textarea class="open-source-plugins" name="descriptions[{{ $lang->id }}]">{{ old('description') }}</textarea>
 
                                         <input type="hidden" name="id[]" value="{{ $popupLang->id }}">
                                     </div>
@@ -95,7 +122,7 @@
 
 
             <div class="mb-4">
-                <label class="form-label">Görünlecek Yer:</label>
+                <label class="form-label">Görüntülenecek Yer:</label>
                 <select name="category_id" id="" class="form-control">
                     <option value="">Kategori Seçiniz</option>
                     @foreach ($categories as $category)
@@ -118,14 +145,15 @@
             </div>
 
         </div>
-        <div class="row">
-            <button type="submit" class="btn btn-success me-2 mb-2">
+        <div class="mb-4">
+            <button type="submit" class="btn btn-light-success">
                 @if ($popupLangs == null)
                     Kaydet
                 @else
                     Güncelle
                 @endif
             </button>
+            <a href="{{ route('user.popup.list') }}" class="btn btn-light-danger">İptal</a>
         </div>
 
     </form>

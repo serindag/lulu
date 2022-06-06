@@ -17,9 +17,10 @@ class AdminProductController extends Controller
 {
     public function list($id = null)
     {
+        $category=$id;
         $products = Product::where('category_id', $id)->get();
 
-        return view('back.pages.product.list', compact('products'));
+        return view('back.pages.product.list', compact('products','category'));
     }
 
     public function status(Request $request)
@@ -37,8 +38,9 @@ class AdminProductController extends Controller
         return "işlem başarılı";
     }
 
-    public function saveform($id = null)
+    public function saveform($category=null,$id = null)
     {
+        
         $productLangs = null;
         $product = null;
         $langs = Lang::get();
@@ -46,18 +48,24 @@ class AdminProductController extends Controller
         $categories = Category::get();
         $branches = Branch::get();
 
-        if ($id != null) {
+        if ($id != null && $category!=null) {
 
-            $product = Product::where('id', $id)->first();
+            $product = Product::where('id', $id)->where('category_id',$category)->first();
             $productLangs = ProductLang::where('product_id', $id)->get();
         }
-        return view('back.pages.product.form', compact('langs', 'langFirst', 'productLangs', 'product', 'categories', 'branches'));
+        
+
+
+        return view('back.pages.product.form', compact('langs', 'langFirst', 'productLangs', 'product', 'categories', 'branches','category'));
     }
 
 
     public function save(AdminProductRequest $request)
     {
+        
+        $branch=Category::where('id',$request->category)->first();
 
+       
         if ($request->names[1] == null) {
             return redirect()->back()->withErrors('Türkçe başlık boş bırakılamaz');
         }
@@ -81,8 +89,8 @@ class AdminProductController extends Controller
                         $products = new Product();
                         $products->name = $name[$langs[$i]->id];
                         $products->description = $description[$langs[$i]->id];
-                        $products->branch_id = $request->branch_id;
-                        $products->category_id = $request->category_id;
+                        $products->branch_id = $branch->branch_id;
+                        $products->category_id = $request->category;
                         $products->price = $request->price;
                         if ($request->hasFile('image')) {
                             $imageName = Str::slug($name[$langs[$i]->id], '-') . '.' . $request->image->getClientOriginalExtension();
@@ -119,7 +127,7 @@ class AdminProductController extends Controller
                         $productLang->save();
                     }
                 }
-            }
+            
 
 
             if (isset($name[$langs[$i]->id])) {
@@ -129,8 +137,8 @@ class AdminProductController extends Controller
                     $products = Product::findOrFail($request->product_id);
                     $products->name = $name[$langs[$i]->id];
                     $products->description = $description[$langs[$i]->id];
-                    $products->branch_id = $request->branch_id;
-                    $products->category_id = $request->category_id;
+                    $products->branch_id = $branch->branch_id;;
+                    $products->category_id = $request->category;
                     $products->price = $request->price;
                     if ($request->hasFile('image')) {
                         $imageName = Str::slug($name[$langs[$i]->id], '-') . '.' . $request->image->getClientOriginalExtension();
@@ -141,7 +149,10 @@ class AdminProductController extends Controller
                 }
             }
         }
-        return redirect()->route('admin.category.branch');
+
+
+        }
+        return redirect()->back()->with('success', 'Ürün Kaydedildi');
     }
 
 

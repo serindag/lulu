@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         $rules = [
 
-            'category_id' => ['required'],
+           
             'price' => ['required', 'regex:/^\d+(\.\d{1,2})?$/'],
             'image' => ['image', 'max:1024', 'mimes:png,jpg,jpeg'],
 
@@ -37,7 +37,7 @@ class ProductRequest extends FormRequest
     {
         return [
 
-            'category_id.required' => 'Lütfen Kategori Seçiniz',
+           
             'price.required' => 'Fiyat Boş Geçilmez',
             'price.regex' => 'Fiyat Numaralardan Oluşmalıdır.',
             'image.image' => 'Lütfen resim dosyası giriniz.',

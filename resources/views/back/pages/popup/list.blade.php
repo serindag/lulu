@@ -41,7 +41,7 @@
         <tbody>
             @foreach ($popups as $popup)
                 <tr>
-                    <td> {!! Str::limit($popup->description, 50, '...') !!} </td>
+                    <td> {{ $popup->name }} </td>
                     <td>
                         @isset($popup->branch->name)
                             {{ $popup->branch->name }}
@@ -51,6 +51,9 @@
                         @isset($popup->category->name)
                             {{ $popup->category->name }}
                         @endisset
+                        @if($popup->category_id==0)
+                        Anasayfa
+                        @endif
                     </td>
                     <td>
                         <span>

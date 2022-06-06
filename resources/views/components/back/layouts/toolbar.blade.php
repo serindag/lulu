@@ -37,8 +37,8 @@
                 @if (Request::segment(1) == 'admin' and Request::segment(2) == 'feedback')
                     <small class="text-muted fs-7 fw-bold my-1 ms-1">Feedback Yönetimi</small>
                 @endif
-                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'import')
-                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Yedekleme</small>
+                @if (Request::segment(1) == 'admin' and Request::segment(2) == 'product')
+                    <small class="text-muted fs-7 fw-bold my-1 ms-1">Ürünler</small>
                 @endif
 
                 <!--end::Description-->
